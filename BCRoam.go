@@ -71,28 +71,28 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 	var err error
 
 	fmt.Println("Launching Init Function")
+	
+	//Peers hard coded here
+	ho := "ATT"
+	rp := "Vodafone"
 
 	//Create array for all adspots in ledger
 	var AllAdspotsArray AllAdspots
 
-	jsonAsBytes, _ := json.Marshal(AllAdspotsArray)
-	err = stub.PutState("BroadcasterA", jsonAsBytes)
-	if err != nil {
-		fmt.Println("Error Creating AllAdspotsArray")
-		return nil, err
-	}
+	t.putAllAdspotPointers(stub, AllAdspotsArray, ho)
+	t.putAllAdspotPointers(stub, AllAdspotsArray, rp)
 
 	fmt.Println("Init Function Complete")
 	return nil, nil
 }
 
 // Transaction makes payment of X units from A to B
-func (t *SimpleChaincode) invoke(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
+func (t *SimpleChaincode) invoke(stub shim.ChaincodeStubInterface, args []string,s int) ([]byte, error) {
 	fmt.Printf("Running invoke")
 
 	showArgs(args)
 
-	var A, B string    // Entities
+	var A[]string   // Entities
 	var Aval, Bval int // Asset holdings
 	var X int          // Transaction value
 	var err error
