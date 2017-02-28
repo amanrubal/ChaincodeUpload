@@ -33,7 +33,7 @@ type SimpleChaincode struct {
 }
 
 // This is our structure for the broadcaster creating bulk inventory
-type adspot struct type adspot struct {
+type adspot struct {
 	recId      string  `json:"recId"`
 	msisdn     string  `json:"msisdn"`
 	name       string  `json:"name"`
