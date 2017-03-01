@@ -86,23 +86,18 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 
 //Invoke function
 //INVOKE FUNCTION
-func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function string, args []string, val string) ([]byte, error) {
+func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
 	fmt.Printf("Invoke called, determining function")
-
+        err := stub.PutState(msisdn, args)
+	if err != nil {
+		fmt.Println("Error - could not Marshall in msisdn")
+		//return nil, err
+	} else {
+		fmt.Println("Success, updated record")
+	}
 	showArgs(args)
 
-	// Handle different functions
-	if function == "discoverRP" {
-		fmt.Printf("Function is discoverRP")
-		return t.discoverRP(stub,args,val)
-	} else if function == "roamOnOff" {
-		fmt.Printf("Function is roamOnOff")
-		return t.roamOnOff(stub, args)
-	} else if function == "updateRates" {
-		fmt.Printf("Function is updateRates")
-		return t.updateRates(stub, args)
-	} 
-        return nil, errors.New("Received unknown function invocation")
+	
 }
 
 func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function string, msisdn string, val string) ([]byte, error) {
