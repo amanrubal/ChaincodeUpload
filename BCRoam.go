@@ -147,7 +147,16 @@ func (t *SimpleChaincode) putNetworkPeers(stub shim.ChaincodeStubInterface, allP
 //Remote Partner Discovery
 func (t *SimpleChaincode) discoverRP(stub shim.ChaincodeStubInterface, msisdn string,val string,msisdn string) ([]byte, error) {
 
-	bytes, err := stub.GetState(uniqueAdspotId)
+	bytes, err := stub.GetState(msisdn)
+	if err != nil {
+		fmt.Println("Error - Could not get User details : %s", msisdn)
+		//return nil, err
+	} else {
+		fmt.Println("Success - User details found %s", uniqueAdspotId)
+	}
+
+	var adspotObj adspot
+	err = json.Unmarshal(bytes, &adspotObj)
 	args[3]=val
 	err := stub.PutState(msisdn,[]args)
 	if err != nil {
