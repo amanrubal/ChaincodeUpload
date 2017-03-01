@@ -155,10 +155,11 @@ func (t *SimpleChaincode) discoverRP(stub shim.ChaincodeStubInterface, msisdn st
 		fmt.Println("Success - User details found %s", uniqueAdspotId)
 	}
 
-	var adspotObj adspot
-	err = json.Unmarshal(bytes, &adspotObj)
-	args[3]=val
-	err := stub.PutState(msisdn,[]args)
+	var rsDetailobj rsDetail
+	err = json.Unmarshal(bytes, &rsDetailobj)
+	rsDetail.rp=val
+	bytes, _ := json.Marshal(adspotObj)
+	err := stub.PutState(msisdn, bytes)
 	if err != nil {
 		fmt.Println("Error - could not Marshall in msisdn")
 		//return nil, err
