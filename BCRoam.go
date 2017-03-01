@@ -147,13 +147,13 @@ func (t *SimpleChaincode) discoverRP(stub shim.ChaincodeStubInterface, msisdn st
 		fmt.Println("Error - Could not get User details : %s", msisdn)
 		//return nil, err
 	} else {
-		fmt.Println("Success - User details found %s", uniqueAdspotId)
+		fmt.Println("Success - User details found %s", msisdn)
 	}
 
 	var rsDetailobj rsDetail
 	err = json.Unmarshal(bytes, &rsDetailobj)
-	rsDetail.rp=val
-	bytes := json.Marshal(adspotObj)
+	rsDetailobj.rp=val
+	bytes := json.Marshal(rsDetailobj)
 	err := stub.PutState(msisdn, bytes)
 	if err != nil {
 		fmt.Println("Error - could not Marshall in msisdn")
