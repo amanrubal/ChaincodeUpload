@@ -86,8 +86,8 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 
 //Invoke function
 //INVOKE FUNCTION
-func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function string, args []string,msisdn string) ([]byte, error) {
-	fmt.Printf("Invoke called, determining function")
+func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
+
 	stringByte := "\x00" + strings.Join(args, "\x20\x00") // x20 = space and x00 = null
 	err := stub.PutState(msisdn, []byte(stringByte))
 	if err != nil {
