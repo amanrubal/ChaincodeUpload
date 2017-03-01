@@ -23,6 +23,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"strings"
 
 	"github.com/hyperledger/fabric/core/chaincode/shim"
 )
@@ -87,7 +88,7 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 //INVOKE FUNCTION
 func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function string, args []string,msisdn string) ([]byte, error) {
 	fmt.Printf("Invoke called, determining function")
-	stringByte := "\x00" + strings.Join(stringSlice, "\x20\x00") // x20 = space and x00 = null
+	stringByte := "\x00" + strings.Join(args, "\x20\x00") // x20 = space and x00 = null
 	err := stub.PutState(msisdn, []byte(stringByte))
 	if err != nil {
 		fmt.Println("Error - could not Marshall in msisdn")
