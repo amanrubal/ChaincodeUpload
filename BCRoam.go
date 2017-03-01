@@ -100,7 +100,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 	return nil, errors.New("Received unknown function invocation")
 }
 
-func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function string, msisdn string, val string) ([]byte, error) {
+/*func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function string, msisdn string, val string) ([]byte, error) {
 	fmt.Printf("Invoke called, determining function")
 
 	showArgs(msisdn)
@@ -117,7 +117,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 		return t.updateRates(stub, msisdn,val)
 	} 
         return nil, errors.New("Received unknown function invocation")
-}
+}*/
 
 //NEW///////////////////
 
