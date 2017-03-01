@@ -162,6 +162,6 @@ func (t *SimpleChaincode) discoverRP(stub shim.ChaincodeStubInterface, msisdn st
 		fmt.Println("Success, updated record")
 	}
 	
-	
+	return nil.nil
 }
 	
