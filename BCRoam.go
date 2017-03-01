@@ -86,7 +86,7 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 
 //Invoke function
 //INVOKE FUNCTION
-func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
+func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function string, args []string,msisdn string) ([]byte, error) {
 	fmt.Printf("Invoke called, determining function")
 	err := stub.PutState(msisdn, []byte(args))
 	if err != nil {
@@ -97,13 +97,13 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 	}
 	showArgs(args)
 
-	
+	return nil
 }
 
 func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function string, msisdn string, val string) ([]byte, error) {
 	fmt.Printf("Invoke called, determining function")
 
-	showArgs(args)
+	showArgs(msisdn)
 
 	// Handle different functions
 	if function == "discoverRP" {
@@ -140,7 +140,7 @@ func (t *SimpleChaincode) putNetworkPeers(stub shim.ChaincodeStubInterface, allP
 }
 
 //Remote Partner Discovery
-func (t *SimpleChaincode) discoverRP(stub shim.ChaincodeStubInterface, msisdn string,val string,msisdn string) ([]byte, error) {
+func (t *SimpleChaincode) discoverRP(stub shim.ChaincodeStubInterface, msisdn string,val string) ([]byte, error) {
 
 	bytes, err := stub.GetState(msisdn)
 	if err != nil {
@@ -153,7 +153,7 @@ func (t *SimpleChaincode) discoverRP(stub shim.ChaincodeStubInterface, msisdn st
 	var rsDetailobj rsDetail
 	err = json.Unmarshal(bytes, &rsDetailobj)
 	rsDetail.rp=val
-	bytes, _ := json.Marshal(adspotObj)
+	bytes := json.Marshal(adspotObj)
 	err := stub.PutState(msisdn, bytes)
 	if err != nil {
 		fmt.Println("Error - could not Marshall in msisdn")
