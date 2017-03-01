@@ -166,3 +166,12 @@ func (t *SimpleChaincode) discoverRP(stub shim.ChaincodeStubInterface, msisdn st
 	return nil,nil
 }
 	
+//MAIN FUNCTION
+func main() {
+	err := shim.Start(new(SimpleChaincode))
+
+	fmt.Printf("IN MAIN of TelcoChaincode")
+	if err != nil {
+		fmt.Printf("Error starting Simple chaincode: %s", err)
+	}
+}
