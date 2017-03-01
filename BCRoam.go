@@ -123,6 +123,8 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 //QUERY FUNCTION
 func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
 	fmt.Printf("======== Query called, determining function")
+	
+	return nil,nil
 }
 
 
