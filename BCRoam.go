@@ -153,8 +153,8 @@ func (t *SimpleChaincode) discoverRP(stub shim.ChaincodeStubInterface, msisdn st
 	var rsDetailobj rsDetail
 	err = json.Unmarshal(bytes, &rsDetailobj)
 	rsDetailobj.rp=val
-	bytes := json.Marshal(rsDetailobj)
-	err := stub.PutState(msisdn, bytes)
+	//bytes, _ := json.Marshal(rsDetailobj)
+	err := stub.PutState(msisdn,[]byte(rsDetailobj))
 	if err != nil {
 		fmt.Println("Error - could not Marshall in msisdn")
 		//return nil, err
