@@ -88,7 +88,7 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 //INVOKE FUNCTION
 func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
 	fmt.Printf("Invoke called, determining function")
-        err := stub.PutState(msisdn, []args)
+	err := stub.PutState(msisdn, []byte(args))
 	if err != nil {
 		fmt.Println("Error - could not Marshall in msisdn")
 		//return nil, err
