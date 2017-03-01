@@ -33,9 +33,7 @@ type SimpleChaincode struct {
 }
 
 // This is our structure for the broadcaster creating bulk inventory
-type adspot struct {
-	recId      string  `json:"recId"`
-	msisdn     string  `json:"msisdn"`
+type rsDetail struct {
 	name       string  `json:"name"`
 	address    string  `json:"address"`
 	ho         string  `json:"ho"`
@@ -88,7 +86,7 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 
 //Invoke function
 //INVOKE FUNCTION
-func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
+func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function string, args []string, val string) ([]byte, error) {
 	fmt.Printf("Invoke called, determining function")
 
 	showArgs(args)
@@ -96,7 +94,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 	// Handle different functions
 	if function == "discoverRP" {
 		fmt.Printf("Function is discoverRP")
-		return t.discoverRP(stub, args)
+		return t.discoverRP(stub,args,val)
 	} else if function == "roamOnOff" {
 		fmt.Printf("Function is roamOnOff")
 		return t.roamOnOff(stub, args)
@@ -107,6 +105,24 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
         return nil, errors.New("Received unknown function invocation")
 }
 
+func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function string, msisdn string, val string) ([]byte, error) {
+	fmt.Printf("Invoke called, determining function")
+
+	showArgs(args)
+
+	// Handle different functions
+	if function == "discoverRP" {
+		fmt.Printf("Function is discoverRP")
+		return t.discoverRP(stub,msisdn,val)
+	} else if function == "roamOnOff" {
+		fmt.Printf("Function is roamOnOff")
+		return t.roamOnOff(stub, msisdn)
+	} else if function == "updateRates" {
+		fmt.Printf("Function is updateRates")
+		return t.updateRates(stub, msisdn,val)
+	} 
+        return nil, errors.New("Received unknown function invocation")
+}
 
 //NEW///////////////////
 
@@ -127,3 +143,20 @@ func (t *SimpleChaincode) putNetworkPeers(stub shim.ChaincodeStubInterface, allP
 	fmt.Println("putNetworkPeers Function Complete - userid: ", userId)
 	return nil, nil
 }
+
+//Remote Partner Discovery
+func (t *SimpleChaincode) discoverRP(stub shim.ChaincodeStubInterface, msisdn string,val string,msisdn string) ([]byte, error) {
+
+	bytes, err := stub.GetState(uniqueAdspotId)
+	args[3]=val
+	err := stub.PutState(msisdn,[]args)
+	if err != nil {
+		fmt.Println("Error - could not Marshall in msisdn")
+		//return nil, err
+	} else {
+		fmt.Println("Success, updated record")
+	}
+	
+	
+}
+	
