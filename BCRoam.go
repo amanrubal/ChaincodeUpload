@@ -129,10 +129,12 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 	bytes,_:= stub.GetState(user)
 	var peer string
 	err := json.Unmarshal(bytes, &peer)
-	if err != nil
-	{fmt.Printf("Error in Unmarshalling")}
-	else
-	{fmt.Printf("Peer name: %v",peer)}
+	if err != nil{
+		fmt.Printf("Error in Unmarshalling")
+	}
+	else{
+		fmt.Printf("Peer name: %v",peer)
+	}
 	return nil,nil
 }
 
