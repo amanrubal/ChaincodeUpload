@@ -121,7 +121,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 }*/
 
 //QUERY FUNCTION
-func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, args string) ([]byte, error) {
+func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function string,args []string) ([]byte, error) {
 	fmt.Println("======== Query called, determining function")
 	var user string
 	user= args
