@@ -64,7 +64,7 @@ func showArgs(args []string) {
 }
 
 // Init function
-func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
+func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
 
 	//var err error
 
