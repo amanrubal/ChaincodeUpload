@@ -130,9 +130,9 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 	var peer string
 	err := json.Unmarshal(bytes, &peer)
 	if err != nil
-	   fmt.Printf("Error in Unmarshalling")
+	{fmt.Printf("Error in Unmarshalling")}
 	else
-	   fmt.Printf("Peer name: %v",peer)
+	{fmt.Printf("Peer name: %v",peer)}
 	return nil,nil
 }
 
@@ -146,8 +146,8 @@ func (t *SimpleChaincode) putNetworkPeers(stub shim.ChaincodeStubInterface, allP
 	fmt.Printf("putNetworkPeers: %+v ", allPeersObj)
 	fmt.Printf("\n")
 	bytes, _ := json.Marshal(allPeersObj)
-	err := stub.PutState(userId, bytes)
-	if err != nil {
+	err2 := stub.PutState(userId, bytes)
+	if err2 != nil {
 		fmt.Println("Error - could not Marshall in putNetworkPeers")
 		//return nil, err
 	} else {
