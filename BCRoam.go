@@ -85,40 +85,8 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 }
 
 //Invoke function
-//INVOKE FUNCTION
-func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
 
-	stringByte := "\x00" + strings.Join(args, "\x20\x00") // x20 = space and x00 = null
-	err := stub.PutState("14691234567", []byte(stringByte))
-	if err != nil {
-		fmt.Println("Error - could not Marshall in msisdn")
-		//return nil, err
-	} else {
-		fmt.Println("Success, updated record")
-	}
-	showArgs(args)
-
-	return nil, errors.New("Received unknown function invocation")
-}
-
-
-//QUERY FUNCTION
-func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
-	fmt.Printf("======== Query called, determining function")
-
-	showArgs(args)
-
-	if function == "queryPeers" {
-		fmt.Printf("Function is queryPeers")
-		return t.queryPeers(stub, args)
-	} else {
-		fmt.Printf("Invalid Function!")
-	}
-
-	return nil, nil
-}
-
-/*func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function string, msisdn string, val string) ([]byte, error) {
+func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function string, msisdn string, val string) ([]byte, error) {
 	fmt.Printf("Invoke called, determining function")
 
 	showArgs(msisdn)
@@ -135,9 +103,26 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 		return t.updateRates(stub, msisdn,val)
 	} 
         return nil, errors.New("Received unknown function invocation")
-}*/
+}
 
 //QUERY FUNCTION
+func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
+	fmt.Printf("======== Query called, determining function")
+
+	showArgs(args)
+
+	if function == "queryPeers" {
+		fmt.Printf("Function is queryPeers")
+		return t.queryPeers(stub, args)
+	} else {
+		fmt.Printf("Invalid Function!")
+	}
+
+	return nil, nil
+}
+////////////////////////////////////////////////////
+
+//Redirect FUNCTIONS
 func (t *SimpleChaincode) queryPeers(stub shim.ChaincodeStubInterface,args []string) ([]byte, error) {
 	fmt.Println("======== Query called, determining function")
 	var user string
@@ -152,6 +137,38 @@ func (t *SimpleChaincode) queryPeers(stub shim.ChaincodeStubInterface,args []str
 		fmt.Printf("Peer name: %v",peer)
 	}
 	return nil,nil
+}
+
+func (t *SimpleChaincode) enterData(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
+
+	msisdn=args[0]
+	var rsDetailObj rsDetail
+		bytes := []byte(in)
+		rsDetailObj.name = []byte(args[1]) 
+		rsDetailObj.address = []byte(args[2])
+		rsDetailObj.ho = []byte(args[3])
+		rsDetailObj.rp = []byte(args[4] )       
+		rsDetailObj.roaming = []byte(args[5])   
+		rsDetailObj.location = []byte(args[6])
+		rsDetailObj.plan = []byte(args[7])
+		rsDetailObj.voinceOutL = []byte(args[8])
+		rsDetailObj.voinceInL = []byte(args[9])
+		rsDetailObj.dataL = []byte(args[10])      
+		rsDetailObj.voiceOutR = []byte(args[11])
+		rsDetailObj.voiceInR = []byte(args[12])
+		rsDetailObj.dataR = []byte(args[13])
+	
+		bytes, _ := json.Marshal(rsDetailObj)
+		err := stub.PutState(adspotObj.UniqueAdspotId, bytes)
+		if err != nil {
+			fmt.Println("Error - could not Marshall in rsDetailObj")
+		} else {
+			fmt.Println("Success -  works")
+		}
+	
+	showArgs(args)
+
+	return nil, errors.New("Received unknown function invocation")
 }
 
 
