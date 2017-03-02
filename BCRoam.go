@@ -125,7 +125,7 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 	fmt.Println("======== Query called, determining function")
 	var user string
 	user= args[0]
-	fmt.Printf("User name: %v",user)
+	fmt.Println("User name: %v",user)
 	bytes,_:= stub.GetState(user)
 	var peer string
 	err := json.Unmarshal(bytes, &peer)
