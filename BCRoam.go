@@ -101,6 +101,23 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 	return nil, errors.New("Received unknown function invocation")
 }
 
+
+//QUERY FUNCTION
+func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
+	fmt.Printf("======== Query called, determining function")
+
+	showArgs(args)
+
+	if function == "queryPeers" {
+		fmt.Printf("Function is queryPeers")
+		return t.queryPeers(stub, args)
+	} else {
+		fmt.Printf("Invalid Function!")
+	}
+
+	return nil, nil
+}
+
 /*func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function string, msisdn string, val string) ([]byte, error) {
 	fmt.Printf("Invoke called, determining function")
 
@@ -121,7 +138,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 }*/
 
 //QUERY FUNCTION
-func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function string,args []string) ([]byte, error) {
+func (t *SimpleChaincode) queryPeers(stub shim.ChaincodeStubInterface,args []string) ([]byte, error) {
 	fmt.Println("======== Query called, determining function")
 	var user string
 	user= args[0]
