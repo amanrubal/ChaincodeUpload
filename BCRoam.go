@@ -123,11 +123,13 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 //QUERY FUNCTION
 func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
 	fmt.Printf("======== Query called, determining function")
-	var user = args[0]
+	var user string
+	user= args[0]
+	fmt.Printf("User name: %v",user)
 	bytes, err := stub.GetState(user)
 	var peer string
 	err = json.Unmarshal(bytes, &peer)
-	fmt.Printf("User name: %v",peer)
+	fmt.Printf("Peer name: %v",peer)
 	return nil,nil
 }
 
