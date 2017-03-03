@@ -166,7 +166,7 @@ func (t *SimpleChaincode) enterData(stub shim.ChaincodeStubInterface, args []str
 		rsDetailObj.dataR = args[13]
 	
 		bytes, _ := json.Marshal(rsDetailObj)
-		err := stub.PutState(adspotObj.UniqueAdspotId, bytes)
+		err := stub.PutState(msisdn, bytes)
 		if err != nil {
 			fmt.Println("Error - could not Marshall in rsDetailObj")
 		} else {
