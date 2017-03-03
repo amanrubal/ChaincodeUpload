@@ -131,6 +131,8 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 ////////////////////////////////////////////////////
 
 //Redirect FUNCTIONS
+
+//Query peers in our network
 func (t *SimpleChaincode) queryPeers(stub shim.ChaincodeStubInterface,args []string) ([]byte, error) {
 	fmt.Println("queryPeers called")
 	var user string
@@ -223,10 +225,12 @@ func (t *SimpleChaincode) discoverRP(stub shim.ChaincodeStubInterface, msisdn st
 	return nil,nil
 }
 
+//Roaming on and off
 func (t *SimpleChaincode) roamOnOff(stub shim.ChaincodeStubInterface, msisdn string) ([]byte, error) {
 	return nil,nil
 }
 
+//Update voice and data rates
 func (t *SimpleChaincode) updateRates(stub shim.ChaincodeStubInterface, msisdn string, val string) ([]byte, error) {
 	return nil,nil
 }
