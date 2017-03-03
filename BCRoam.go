@@ -89,6 +89,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 	fmt.Printf("Invoke called, determining function :%v",function)
 
 	showArgs(args)
+	var msisdn,val string
 
 	// Handle different functions
 	if function == "discoverRP" {
