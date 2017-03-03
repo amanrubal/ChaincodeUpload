@@ -23,7 +23,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"strings"
 
 	"github.com/hyperledger/fabric/core/chaincode/shim"
 )
@@ -89,21 +88,26 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
 	fmt.Printf("Invoke called, determining function :%v",function)
 
-	showArgs(msisdn)
+	showArgs(args)
 
 	// Handle different functions
 	if function == "discoverRP" {
 		fmt.Printf("Function is discoverRP")
+		val=args[0]
+		msisdn=args[1]
 		return t.discoverRP(stub,msisdn,val)
 	} else if function == "enterData" {
 		fmt.Printf("Function is enterData")
-		return t.enterData(stub, msisdn)
+		return t.enterData(stub,args)
 	} else if function == "roamOnOff" {
 		fmt.Printf("Function is roamOnOff")
+		msisdn=args[0]
 		return t.roamOnOff(stub, msisdn)
 	}else if function == "updateRates" {
 		fmt.Printf("Function is updateRates")
-		return t.updateRates(stub, msisdn,val)
+		val=args[0]
+		msisdn=args[1]
+		return t.updateRates(stub,msisdn,val)
 	} 
         return nil, errors.New("Received unknown function invocation")
 }
