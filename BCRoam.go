@@ -40,12 +40,12 @@ type rsDetail struct {
 	roaming    string  `json:"roaming"`
 	location   string  `json:"location"`
 	plan       string  `json:"plan"`
-	voinceOutL float64 `json:"voinceOutL"`
-	voinceInL  float64 `json:"voinceInL"`
+	voinceOutL string `json:"voinceOutL"`
+	voinceInL  string `json:"voinceInL"`
 	dataL      string  `json:"float64"`
-	voiceOutR  float64 `json:"voiceOutR"`
-	voiceInR   float64 `json:"voiceInR"`
-	dataR      float64 `json:"dataR"`
+	voiceOutR  string `json:"voiceOutR"`
+	voiceInR   string `json:"voiceInR"`
+	dataR      string `json:"dataR"`
 } 
 
 //This is a helper structure to point to allPeers
