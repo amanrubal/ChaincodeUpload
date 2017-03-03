@@ -149,22 +149,21 @@ func (t *SimpleChaincode) queryPeers(stub shim.ChaincodeStubInterface,args []str
 
 func (t *SimpleChaincode) enterData(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
 
-	msisdn=args[0]
+	var msisdn=args[0]
 	var rsDetailObj rsDetail
-		bytes := []byte(in)
-		rsDetailObj.name = []byte(args[1]) 
-		rsDetailObj.address = []byte(args[2])
-		rsDetailObj.ho = []byte(args[3])
-		rsDetailObj.rp = []byte(args[4] )       
-		rsDetailObj.roaming = []byte(args[5])   
-		rsDetailObj.location = []byte(args[6])
-		rsDetailObj.plan = []byte(args[7])
-		rsDetailObj.voinceOutL = []byte(args[8])
-		rsDetailObj.voinceInL = []byte(args[9])
-		rsDetailObj.dataL = []byte(args[10])      
-		rsDetailObj.voiceOutR = []byte(args[11])
-		rsDetailObj.voiceInR = []byte(args[12])
-		rsDetailObj.dataR = []byte(args[13])
+		rsDetailObj.name = args[1]
+		rsDetailObj.address = args[2]
+		rsDetailObj.ho = args[3]
+		rsDetailObj.rp = args[4]   
+		rsDetailObj.roaming = args[5]
+		rsDetailObj.location = args[6]
+		rsDetailObj.plan = args[7]
+		rsDetailObj.voinceOutL = args[8]
+		rsDetailObj.voinceInL = args[9]
+		rsDetailObj.dataL = args[10]     
+		rsDetailObj.voiceOutR = args[11]
+		rsDetailObj.voiceInR = args[12]
+		rsDetailObj.dataR = args[13]
 	
 		bytes, _ := json.Marshal(rsDetailObj)
 		err := stub.PutState(adspotObj.UniqueAdspotId, bytes)
