@@ -122,6 +122,9 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 	if function == "queryPeers" {
 		fmt.Printf("Function is queryPeers")
 		return t.queryPeers(stub, args)
+	} else if function == "queryMSISDN" {
+		fmt.Printf("Function is queryMSISDN")
+		return t.queryPeers(stub, args)
 	} else {
 		fmt.Printf("Invalid Function!")
 	}
@@ -141,6 +144,25 @@ func (t *SimpleChaincode) queryPeers(stub shim.ChaincodeStubInterface,args []str
 	bytes,_:= stub.GetState(user)
 	var peer string
 	err := json.Unmarshal(bytes, &peer)
+	if err != nil{
+		fmt.Printf("Error in Unmarshalling")
+	} else {
+		fmt.Printf("Peer name: %v",peer)
+	}
+	return nil,nil
+}
+
+
+//Query MSISDN in our network
+func (t *SimpleChaincode) queryMSISDN(stub shim.ChaincodeStubInterface,args []string) ([]byte, error) {
+	fmt.Println("queryMSISDN called")
+	var user string
+	user= args[0]
+	fmt.Println("User name: %v",user)
+	bytes,_:= stub.GetState(user)
+	
+	var rsDetailobj rsDetail
+	err := json.Unmarshal(bytes, &rsDetailobj)
 	if err != nil{
 		fmt.Printf("Error in Unmarshalling")
 	} else {
@@ -232,6 +254,9 @@ func (t *SimpleChaincode) roamOnOff(stub shim.ChaincodeStubInterface, msisdn str
 
 //Update voice and data rates
 func (t *SimpleChaincode) updateRates(stub shim.ChaincodeStubInterface, msisdn string, val string) ([]byte, error) {
+	
+	
+	
 	return nil,nil
 }
 
