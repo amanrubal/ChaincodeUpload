@@ -127,7 +127,7 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 
 //Redirect FUNCTIONS
 func (t *SimpleChaincode) queryPeers(stub shim.ChaincodeStubInterface,args []string) ([]byte, error) {
-	fmt.Println("queryPeers called)
+	fmt.Println("queryPeers called")
 	var user string
 	user= args[0]
 	fmt.Println("User name: %v",user)
