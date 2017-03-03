@@ -124,7 +124,7 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 		return t.queryPeers(stub, args)
 	} else if function == "queryMSISDN" {
 		fmt.Printf("Function is queryMSISDN")
-		return t.queryPeers(stub, args)
+		return t.queryMSISDN(stub, args)
 	} else {
 		fmt.Printf("Invalid Function!")
 	}
