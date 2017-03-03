@@ -87,7 +87,7 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 //Invoke function
 
 func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
-	fmt.Printf("Invoke called, determining function")
+	fmt.Printf("Invoke called, determining function :%v",function)
 
 	showArgs(msisdn)
 
@@ -127,7 +127,7 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 
 //Redirect FUNCTIONS
 func (t *SimpleChaincode) queryPeers(stub shim.ChaincodeStubInterface,args []string) ([]byte, error) {
-	fmt.Println("======== Query called, determining function")
+	fmt.Println("queryPeers called)
 	var user string
 	user= args[0]
 	fmt.Println("User name: %v",user)
