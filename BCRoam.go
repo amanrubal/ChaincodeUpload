@@ -156,17 +156,29 @@ func (t *SimpleChaincode) queryPeers(stub shim.ChaincodeStubInterface,args []str
 //Query MSISDN in our network
 func (t *SimpleChaincode) queryMSISDN(stub shim.ChaincodeStubInterface,args []string) ([]byte, error) {
 	fmt.Println("queryMSISDN called")
-	var user string
-	user= args[0]
-	fmt.Println("User name: %v",user)
-	bytes,_:= stub.GetState(user)
+	var msisdn string
+	msisdn= args[0]
+	fmt.Println("MSISDN: %v",msisdn)
+	bytes,_:= stub.GetState(msisdn)
 	
 	var rsDetailobj rsDetail
 	err := json.Unmarshal(bytes, &rsDetailobj)
 	if err != nil{
 		fmt.Printf("Error in Unmarshalling")
 	} else {
-		fmt.Printf("Peer name: %v",peer)
+		fmt.Printf("Name:%v",rsDetailObj.name)
+		fmt.Printf("Addr:%v",rsDetailObj.address)
+		fmt.Printf("HO:%v",rsDetailObj.ho)
+		fmt.Printf("RP:%v",rsDetailObj.rp)
+		fmt.Printf("Roaming:%v",rsDetailObj.roaming)
+		fmt.Printf("Location:%v",rsDetailObj.location)
+		fmt.Printf("Plan:%v",rsDetailObj.plan)
+		fmt.Printf("VoiceOutLocal:%v",rsDetailObj.voinceOutL)
+		fmt.Printf("VoiceInLocal:%v",rsDetailObj.voinceInL)
+		fmt.Printf("DataLocal:%v",rsDetailObj.dataL)  
+		fmt.Printf("VoiceOutRoam:%v",rsDetailObj.voiceOutR)
+		fmt.Printf("VoiceInRoam:%v",rsDetailObj.voiceInR)
+		fmt.Printf("DataRoam:%v",rsDetailObj.dataR)
 	}
 	return nil,nil
 }
