@@ -160,13 +160,13 @@ func (t *SimpleChaincode) queryMSISDN(stub shim.ChaincodeStubInterface,args []st
 	msisdn= args[0]
 	fmt.Println("MSISDN: %v",msisdn)
 	bytes,_:= stub.GetState(msisdn)
-	
-	var rsDetailObj rsDetail
+	fmt.Println(string(bytes))
+	/*var rsDetailObj rsDetail
 	err := json.Unmarshal(bytes, &rsDetailobj)
 	if err != nil{
 		fmt.Printf("Error in Unmarshalling")
 	} else {
-		/*fmt.Printf("Name:%v",rsDetailObj.name)
+		fmt.Printf("Name:%v",rsDetailObj.name)
 		fmt.Printf("Addr:%v",rsDetailObj.address)
 		fmt.Printf("HO:%v",rsDetailObj.ho)
 		fmt.Printf("RP:%v",rsDetailObj.rp)
@@ -178,9 +178,8 @@ func (t *SimpleChaincode) queryMSISDN(stub shim.ChaincodeStubInterface,args []st
 		fmt.Printf("DataLocal:%v",rsDetailObj.dataL)  
 		fmt.Printf("VoiceOutRoam:%v",rsDetailObj.voiceOutR)
 		fmt.Printf("VoiceInRoam:%v",rsDetailObj.voiceInR)
-		fmt.Printf("DataRoam:%v",rsDetailObj.dataR)*/
-		fmt.Println(string(bytes))
-	}
+		fmt.Printf("DataRoam:%v",rsDetailObj.dataR)
+	}*/
 	return nil,nil
 }
 
