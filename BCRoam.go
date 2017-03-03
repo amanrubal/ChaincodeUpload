@@ -180,8 +180,6 @@ func (t *SimpleChaincode) enterData(stub shim.ChaincodeStubInterface, args []str
 }
 
 
-//NEW///////////////////
-
 //putNetworkPeers: To put an array containing pointers to all blocks for a particular user(or peer) on the ledger
 func (t *SimpleChaincode) putNetworkPeers(stub shim.ChaincodeStubInterface, allPeersObj AllPeers, userId string) ([]byte, error) {
 	//marshalling
@@ -225,6 +223,16 @@ func (t *SimpleChaincode) discoverRP(stub shim.ChaincodeStubInterface, msisdn st
 	
 	return nil,nil
 }
+
+func (t *SimpleChaincode) roamOnOff(stub shim.ChaincodeStubInterface, msisdn string) ([]byte, error) {
+	return nil,nil
+}
+
+func (t *SimpleChaincode) updateRates(stub shim.ChaincodeStubInterface, msisdn string, val string) ([]byte, error) {
+	return nil,nil
+}
+
+
 	
 //MAIN FUNCTION
 func main() {
