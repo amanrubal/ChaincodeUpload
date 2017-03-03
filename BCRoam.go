@@ -95,10 +95,13 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 	if function == "discoverRP" {
 		fmt.Printf("Function is discoverRP")
 		return t.discoverRP(stub,msisdn,val)
+	} else if function == "enterData" {
+		fmt.Printf("Function is enterData")
+		return t.enterData(stub, msisdn)
 	} else if function == "roamOnOff" {
 		fmt.Printf("Function is roamOnOff")
 		return t.roamOnOff(stub, msisdn)
-	} else if function == "updateRates" {
+	}else if function == "updateRates" {
 		fmt.Printf("Function is updateRates")
 		return t.updateRates(stub, msisdn,val)
 	} 
