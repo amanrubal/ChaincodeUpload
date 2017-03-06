@@ -201,7 +201,7 @@ func (t *SimpleChaincode) enterData(stub shim.ChaincodeStubInterface, args []str
 		rsDetailObj.voiceInR = args[12]
 		rsDetailObj.dataR = args[13]
 	
-	        fmt.Println(string(rsDetailObj))
+	        fmt.Println(rsDetailObj)
 		bytes, _ := json.Marshal(rsDetailObj)
 	        fmt.Println(string(bytes))
 		err := stub.PutState(msisdn, bytes)
