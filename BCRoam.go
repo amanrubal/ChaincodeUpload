@@ -201,7 +201,9 @@ func (t *SimpleChaincode) enterData(stub shim.ChaincodeStubInterface, args []str
 		rsDetailObj.voiceInR = args[12]
 		rsDetailObj.dataR = args[13]
 	
+	        fmt.Println(string(rsDetailObj))
 		bytes, _ := json.Marshal(rsDetailObj)
+	        fmt.Println(string(bytes))
 		err := stub.PutState(msisdn, bytes)
 		if err != nil {
 			fmt.Println("Error - could not Marshall in rsDetailObj")
@@ -209,7 +211,7 @@ func (t *SimpleChaincode) enterData(stub shim.ChaincodeStubInterface, args []str
 			fmt.Println("Success -  works")
 		}
 	
-	showArgs(args)
+	//showArgs(args)
 
 	return nil, errors.New("Received unknown function invocation")
 }
