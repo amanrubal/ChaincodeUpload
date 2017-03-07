@@ -226,6 +226,8 @@ func (t *SimpleChaincode) enterData(stub shim.ChaincodeStubInterface, args []str
 		rsDetailObj.VoiceInR = args[12]
 		rsDetailObj.DataR = args[13]
 	
+	        Currbytes, err := stub.GetState(MSISDN)
+	
 	        fmt.Println(rsDetailObj)
 		bytes, _ := json.Marshal(rsDetailObj)
 	        fmt.Println(string(bytes))
