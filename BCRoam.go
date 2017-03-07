@@ -34,31 +34,31 @@ type SimpleChaincode struct {
 // This is our structure for the broadcaster creating bulk inventory
 
 type rsDetailInit struct {
-	msisdn     string  `json:"msisdn"`
-	name       string  `json:"name"`
-	address    string  `json:"address"`
-	ho         string  `json:"ho"`
-	rp         string  `json:"rp"`
-	roaming    string  `json:"roaming"`
-	location   string  `json:"location"`
+	MSISDN     string  `json:"msisdn"`
+	Name       string  `json:"name"`
+	Address    string  `json:"address"`
+	HO         string  `json:"ho"`
+	RP         string  `json:"rp"`
+	Roaming    string  `json:"roaming"`
+	Location   string  `json:"location"`
 } 
 
 
 type rsDetail struct {
-	msisdn     string  `json:"msisdn"`
-	name       string  `json:"name"`
-	address    string  `json:"address"`
-	ho         string  `json:"ho"`
-	rp         string  `json:"rp"`
-	roaming    string  `json:"roaming"`
-	location   string  `json:"location"`
-	plan       string  `json:"plan"`
-	voinceOutL string `json:"voinceOutL"`
-	voinceInL  string `json:"voinceInL"`
-	dataL      string  `json:"float64"`
-	voiceOutR  string `json:"voiceOutR"`
-	voiceInR   string `json:"voiceInR"`
-	dataR      string `json:"dataR"`
+	MSISDN     string  `json:"msisdn"`
+	Name       string  `json:"name"`
+	Address    string  `json:"address"`
+	HO         string  `json:"ho"`
+	RP         string  `json:"rp"`
+	Roaming    string  `json:"roaming"`
+	Location   string  `json:"location"`
+	Plan       string  `json:"plan"`
+	VoinceOutL string `json:"voinceOutL"`
+	VoinceInL  string `json:"voinceInL"`
+	DataL      string  `json:"float64"`
+	VoiceOutR  string `json:"voiceOutR"`
+	VoiceInR   string `json:"voiceInR"`
+	DataR      string `json:"dataR"`
 } 
 
 //This is a helper structure to point to allPeers
@@ -94,13 +94,13 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 	//Create array for all adspots in ledger
 	//var AllPeersArray AllPeers
 
-	t.putMSIDN(stub,rs1, rs1.msisdn)
-	t.putMSIDN(stub,rs2, rs2.msisdn)
-	t.putMSIDN(stub,rs3, rs3.msisdn)
-	t.putMSIDN(stub,rs4, rs4.msisdn)
-	t.putMSIDN(stub,rs5, rs5.msisdn)
-	t.putMSIDN(stub,rs6, rs6.msisdn)
-	t.putMSIDN(stub,rs7, rs7.msisdn)
+	t.putMSIDN(stub,rs1, rs1.MSISDN)
+	t.putMSIDN(stub,rs2, rs2.MSISDN)
+	t.putMSIDN(stub,rs3, rs3.MSISDN)
+	t.putMSIDN(stub,rs4, rs4.MSISDN)
+	t.putMSIDN(stub,rs5, rs5.MSISDN)
+	t.putMSIDN(stub,rs6, rs6.MSISDN)
+	t.putMSIDN(stub,rs7, rs7.MSISDN)
 
 	fmt.Println("Init Function Complete")
 	return nil, nil
@@ -274,7 +274,7 @@ func (t *SimpleChaincode) discoverRP(stub shim.ChaincodeStubInterface, msisdn st
 
 	var rsDetailobj rsDetail
 	err = json.Unmarshal(bytes, &rsDetailobj)
-	rsDetailobj.rp=val
+	rsDetailobj.RP=val
 	bytes2, _ := json.Marshal(rsDetailobj)
 	err2 := stub.PutState(msisdn,bytes2)
 	if err2 != nil {
