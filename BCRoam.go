@@ -232,8 +232,8 @@ func (t *SimpleChaincode) enterData(stub shim.ChaincodeStubInterface, args []str
 		bytes, _ := json.Marshal(rsDetailObj)
 	        fmt.Println(string(bytes))
 	        fmt.Printf("%x",bytes)
-		err := stub.PutState(MSISDN, bytes)
-		if err != nil {
+		err2 := stub.PutState(MSISDN, bytes)
+		if err2 != nil {
 			fmt.Println("Error - could not Marshall in rsDetailObj")
 		} else {
 			fmt.Println("Success -  works")
