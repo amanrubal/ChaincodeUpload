@@ -191,6 +191,7 @@ func (t *SimpleChaincode) queryMSISDN(stub shim.ChaincodeStubInterface,args []st
 	fmt.Println("MSISDN: %v",msisdn)
 	bytes,_:= stub.GetState(msisdn)
 	fmt.Println(string(bytes))
+	fmt.Printf("%x",bytes)
 	/*var rsDetailObj rsDetail
 	err := json.Unmarshal(bytes, &rsDetailobj)
 	if err != nil{
@@ -217,6 +218,7 @@ func (t *SimpleChaincode) enterData(stub shim.ChaincodeStubInterface, args []str
 
 	var msisdn=args[0]
 	var rsDetailObj rsDetail
+	        rsDetailObj.msisdn = args[0]
 		rsDetailObj.name = args[1]
 		rsDetailObj.address = args[2]
 		rsDetailObj.ho = args[3]
@@ -234,6 +236,7 @@ func (t *SimpleChaincode) enterData(stub shim.ChaincodeStubInterface, args []str
 	        fmt.Println(rsDetailObj)
 		bytes, _ := json.Marshal(rsDetailObj)
 	        fmt.Println(string(bytes))
+	        fmt.Printf("%x",bytes)
 		err := stub.PutState(msisdn, bytes)
 		if err != nil {
 			fmt.Println("Error - could not Marshall in rsDetailObj")
