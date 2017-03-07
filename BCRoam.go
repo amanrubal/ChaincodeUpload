@@ -32,7 +32,21 @@ type SimpleChaincode struct {
 }
 
 // This is our structure for the broadcaster creating bulk inventory
+
+type rsDetailInit struct {
+	msisdn     string  `json:"msisdn"`
+	name       string  `json:"name"`
+	address    string  `json:"address"`
+	ho         string  `json:"ho"`
+	rp         string  `json:"rp"`
+	roaming    string  `json:"roaming"`
+	location   string  `json:"location"`
+	plan       string  `json:"plan"`
+} 
+
+
 type rsDetail struct {
+	msisdn     string  `json:"msisdn"`
 	name       string  `json:"name"`
 	address    string  `json:"address"`
 	ho         string  `json:"ho"`
@@ -70,14 +84,31 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 	fmt.Println("Launching Init Function")
 	
 	//Peers hard coded here
-	ho := "ATT"
-	rp := "Vodafone"
+	var rs1 rsDetailInit 
+	var rs2 rsDetailInit 
+	var rs3 rsDetailInit 
+	var rs4 rsDetailInit 
+	var rs5 rsDetailInit 
+	var rs6 rsDetailInit 
+	var rs7 rsDetailInit 
+	rs1={"14691234567","A","DALLAS","AT&T","FALSE","DALLAS"}
+	rs2={"14691234568","A","DALLAS","AT&T","FALSE","DALLAS"}
+	rs3={"14691234569","A","DALLAS","AT&T","FALSE","DALLAS"}
+	rs4={"14691234570","A","DALLAS","AT&T","FALSE","DALLAS"}
+	rs5={"349091234567","A","BARCELONA","VODAFONE","FALSE","DALLAS"}
+	rs6={"349091234568","A","BARCELONA","VODAFONE","FALSE","DALLAS"}
+	rs7={"349091234569","A","BARCELONA","VODAFONE","FALSE","DALLAS"}
 
 	//Create array for all adspots in ledger
-	var AllPeersArray AllPeers
+	//var AllPeersArray AllPeers
 
-	t.putNetworkPeers(stub, AllPeersArray, ho)
-	t.putNetworkPeers(stub, AllPeersArray, rp)
+	t.putMSIDN(stub,rs1, rs1.msisdn)
+	t.putMSIDN(stub,rs2, rs2.msisdn)
+	t.putMSIDN(stub,rs3, rs3.msisdn)
+	t.putMSIDN(stub,rs4, rs4.msisdn)
+	t.putMSIDN(stub,rs5, rs5.msisdn)
+	t.putMSIDN(stub,rs6, rs6.msisdn)
+	t.putMSIDN(stub,rs7, rs7.msisdn)
 
 	fmt.Println("Init Function Complete")
 	return nil, nil
@@ -218,20 +249,19 @@ func (t *SimpleChaincode) enterData(stub shim.ChaincodeStubInterface, args []str
 
 
 //putNetworkPeers: To put an array containing pointers to all blocks for a particular user(or peer) on the ledger
-func (t *SimpleChaincode) putNetworkPeers(stub shim.ChaincodeStubInterface, allPeersObj AllPeers, userId string) ([]byte, error) {
+func (t *SimpleChaincode) putMSIDN(stub shim.ChaincodeStubInterface,msisdn string,rs rsDetailInit) ([]byte, error) {
 	//marshalling
-	fmt.Println("Launching putNetworkPeers helper function userid: ", userId)
-	fmt.Printf("putNetworkPeers: %+v ", allPeersObj)
+	fmt.Println(" Initializing msisdn: ", msisdn)
+	fmt.Printf("put details: %+v ", rs)
 	fmt.Printf("\n")
-	bytes, _ := json.Marshal(allPeersObj)
-	err2 := stub.PutState(userId, bytes)
+	bytes, _ := json.Marshal(rs)
+	err2 := stub.PutState(msisdn, bytes)
 	if err2 != nil {
-		fmt.Println("Error - could not Marshall in putNetworkPeers")
+		fmt.Println("Error - could not Marshall in msisdn")
 		//return nil, err
 	} else {
-		fmt.Println("Success - Marshall in putNetworkPeers")
+		fmt.Println("Success - Marshall in msisdn details")
 	}
-	fmt.Println("putNetworkPeers Function Complete - userid: ", userId)
 	return nil, nil
 }
 
