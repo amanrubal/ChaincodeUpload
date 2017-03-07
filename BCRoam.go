@@ -41,7 +41,6 @@ type rsDetailInit struct {
 	rp         string  `json:"rp"`
 	roaming    string  `json:"roaming"`
 	location   string  `json:"location"`
-	plan       string  `json:"plan"`
 } 
 
 
@@ -91,13 +90,13 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 	var rs5 rsDetailInit 
 	var rs6 rsDetailInit 
 	var rs7 rsDetailInit 
-	rs1={"14691234567","A","DALLAS","AT&T","FALSE","DALLAS"}
-	rs2={"14691234568","A","DALLAS","AT&T","FALSE","DALLAS"}
-	rs3={"14691234569","A","DALLAS","AT&T","FALSE","DALLAS"}
-	rs4={"14691234570","A","DALLAS","AT&T","FALSE","DALLAS"}
-	rs5={"349091234567","A","BARCELONA","VODAFONE","FALSE","DALLAS"}
-	rs6={"349091234568","A","BARCELONA","VODAFONE","FALSE","DALLAS"}
-	rs7={"349091234569","A","BARCELONA","VODAFONE","FALSE","DALLAS"}
+	rs1={"14691234567","A","DALLAS","AT&T","","FALSE","DALLAS"}
+	rs2={"14691234568","A","DALLAS","AT&T","","FALSE","DALLAS"}
+	rs3={"14691234569","A","DALLAS","AT&T","","FALSE","DALLAS"}
+	rs4={"14691234570","A","DALLAS","AT&T","","FALSE","DALLAS"}
+	rs5={"349091234567","A","BARCELONA","VODAFONE","","FALSE","DALLAS"}
+	rs6={"349091234568","A","BARCELONA","VODAFONE","","FALSE","DALLAS"}
+	rs7={"349091234569","A","BARCELONA","VODAFONE","","FALSE","DALLAS"}
 
 	//Create array for all adspots in ledger
 	//var AllPeersArray AllPeers
