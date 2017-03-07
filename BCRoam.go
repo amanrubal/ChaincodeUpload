@@ -82,14 +82,7 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 
 	fmt.Println("Launching Init Function")
 	
-	//Peers hard coded here
-	/*var rs1 rsDetailInit 
-	var rs2 rsDetailInit 
-	var rs3 rsDetailInit 
-	var rs4 rsDetailInit 
-	var rs5 rsDetailInit 
-	var rs6 rsDetailInit 
-	var rs7 rsDetailInit */
+	//Inventory hard coded here
 	rs1:=rsDetailInit{"14691234567","A","DALLAS","AT&T","","FALSE","DALLAS"}
 	rs2:=rsDetailInit{"14691234568","A","DALLAS","AT&T","","FALSE","DALLAS"}
 	rs3:=rsDetailInit{"14691234569","A","DALLAS","AT&T","","FALSE","DALLAS"}
@@ -257,6 +250,7 @@ func (t *SimpleChaincode) putMSIDN(stub shim.ChaincodeStubInterface,rs rsDetailI
 	fmt.Printf("put details: %+v ", rs)
 	fmt.Printf("\n")
 	bytes, _ := json.Marshal(rs)
+	fmt.Println(string(bytes))
 	err2 := stub.PutState(msisdn, bytes)
 	if err2 != nil {
 		fmt.Println("Error - could not Marshall in msisdn")
