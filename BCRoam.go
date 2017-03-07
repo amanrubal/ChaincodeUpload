@@ -226,7 +226,13 @@ func (t *SimpleChaincode) enterData(stub shim.ChaincodeStubInterface, args []str
 		rsDetailObj.VoiceInR = args[12]
 		rsDetailObj.DataR = args[13]
 	
-	        Currbytes, _ := stub.GetState(MSISDN)
+	        Currbytes, err := stub.GetState(msisdn)
+		if err != nil {
+			fmt.Println("Error - Could not get User details : %s", msisdn)
+			//return nil, err
+		} else {
+			fmt.Println("Success - User details found %s %v", msisdn ,string(Currbytes) )
+		}
 	
 	        fmt.Println(rsDetailObj)
 		bytes, _ := json.Marshal(rsDetailObj)
