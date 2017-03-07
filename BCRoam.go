@@ -248,7 +248,7 @@ func (t *SimpleChaincode) enterData(stub shim.ChaincodeStubInterface, args []str
 
 
 //putNetworkPeers: To put an array containing pointers to all blocks for a particular user(or peer) on the ledger
-func (t *SimpleChaincode) putMSIDN(stub shim.ChaincodeStubInterface,msisdn string,rs rsDetailInit) ([]byte, error) {
+func (t *SimpleChaincode) putMSIDN(stub shim.ChaincodeStubInterface,rs rsDetailInit,msisdn string) ([]byte, error) {
 	//marshalling
 	fmt.Println(" Initializing msisdn: ", msisdn)
 	fmt.Printf("put details: %+v ", rs)
