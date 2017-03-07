@@ -226,7 +226,7 @@ func (t *SimpleChaincode) enterData(stub shim.ChaincodeStubInterface, args []str
 		rsDetailObj.VoiceInR = args[12]
 		rsDetailObj.DataR = args[13]
 	
-	        Currbytes, err := stub.GetState(msisdn)
+	        Currbytes, err := stub.GetState(MSISDN)
 		if err != nil {
 			fmt.Println("Error - Could not get User details : %s", MSISDN)
 			//return nil, err
