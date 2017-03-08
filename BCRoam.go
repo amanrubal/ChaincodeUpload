@@ -204,7 +204,7 @@ func (t *SimpleChaincode) queryMSISDN(stub shim.ChaincodeStubInterface,args []st
 		fmt.Printf("VoiceInRoam:%v",rsDetailObj.voiceInR)
 		fmt.Printf("DataRoam:%v",rsDetailObj.dataR)
 	}*/
-	return nil,nil
+	return bytes,nil
 }
 
 func (t *SimpleChaincode) enterData(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
