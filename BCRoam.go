@@ -33,7 +33,9 @@ type SimpleChaincode struct {
 
 // This is our structure for the broadcaster creating bulk inventory
 
-type rsDetailInit struct {
+
+type rsDetailBlock struct {
+	PublicKey  string  `json:"publickey"`
 	MSISDN     string  `json:"msisdn"`
 	Name       string  `json:"name"`
 	Address    string  `json:"address"`
@@ -41,8 +43,14 @@ type rsDetailInit struct {
 	RP         string  `json:"rp"`
 	Roaming    string  `json:"roaming"`
 	Location   string  `json:"location"`
+	RateType   string  `json:"ratetype"`
+	TransType  string `json:"action"`
+	Destination string `json:"destination"`
+	Duration   string  `json:"duration"`
+	Charges    string `json:"charges"`
+	Flag       string `json:"flag"`
+	Time       string `json:"time"`
 } 
-
 
 type rsDetail struct {
 	MSISDN     string  `json:"msisdn"`
@@ -83,13 +91,13 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 	fmt.Println("Launching Init Function")
 	
 	//Inventory hard coded here
-	rs1:=rsDetailInit{"14691234567","A","DALLAS","AT&T","","FALSE","DALLAS"}
-	rs2:=rsDetailInit{"14691234568","A","DALLAS","AT&T","","FALSE","DALLAS"}
-	rs3:=rsDetailInit{"14691234569","A","DALLAS","AT&T","","FALSE","DALLAS"}
-	rs4:=rsDetailInit{"14691234570","A","DALLAS","AT&T","","FALSE","DALLAS"}
-	rs5:=rsDetailInit{"349091234567","A","BARCELONA","VODAFONE","","FALSE","DALLAS"}
-	rs6:=rsDetailInit{"349091234568","A","BARCELONA","VODAFONE","","FALSE","DALLAS"}
-	rs7:=rsDetailInit{"349091234569","A","BARCELONA","VODAFONE","","FALSE","DALLAS"}
+	rs1:=rsDetailInit{"rs1","14691234567","A","DALLAS","AT&T","","FALSE","DALLAS"}
+	rs2:=rsDetailInit{"rs2","14691234568","A","DALLAS","AT&T","","FALSE","DALLAS"}
+	rs3:=rsDetailInit{"rs3","14691234569","A","DALLAS","AT&T","","FALSE","DALLAS"}
+	rs4:=rsDetailInit{"rs4","14691234570","A","DALLAS","AT&T","","FALSE","DALLAS"}
+	rs5:=rsDetailInit{"rs5","349091234567","A","BARCELONA","VODAFONE","","FALSE","DALLAS"}
+	rs6:=rsDetailInit{"rs6","349091234568","A","BARCELONA","VODAFONE","","FALSE","DALLAS"}
+	rs7:=rsDetailInit{"rs7","349091234569","A","BARCELONA","VODAFONE","","FALSE","DALLAS"}
 
 	//Create array for all adspots in ledger
 	//var AllPeersArray AllPeers
