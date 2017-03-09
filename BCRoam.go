@@ -277,6 +277,8 @@ func (t *SimpleChaincode) discoverRP(stub shim.ChaincodeStubInterface, key strin
 	err = json.Unmarshal(bytes, &rsDetailobj)
 	rsDetailobj.RP=sp
 	rsDetailobj.Location=loc
+	rsDetailobj.Action="Discovery"
+	rsDetailobj.TransType="Setup"
 	currentDateStr := time.Now().Format(time.RFC822)
 	rsDetailobj.Time, _ = time.Parse(time.RFC822, currentDateStr)
 	bytes2, _ := json.Marshal(rsDetailobj)
