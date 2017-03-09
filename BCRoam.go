@@ -264,7 +264,7 @@ func (t *SimpleChaincode) enterData(stub shim.ChaincodeStubInterface, args []str
 
 
 //putNetworkPeers: To put an array containing pointers to all blocks for a particular user(or peer) on the ledger
-func (t *SimpleChaincode) putMSIDN(stub shim.ChaincodeStubInterface,rs rsDetailBloack,msisdn string) ([]byte, error) {
+func (t *SimpleChaincode) putMSIDN(stub shim.ChaincodeStubInterface,rs rsDetailBlock,msisdn string) ([]byte, error) {
 	//marshalling
 	fmt.Println(" Initializing msisdn: ", msisdn)
 	fmt.Printf("put details: %+v ", rs)
@@ -393,7 +393,7 @@ func (t *SimpleChaincode) CallEnd(stub shim.ChaincodeStubInterface, msisdn strin
 	rsDetailobj.TransType="Call Out"
 	currentDateStr := time.Now().Format(time.RFC822)
 	duration := time.Since(then)
-	rsDetailObj.Time, _ = time.Parse(time.RFC822, currentDateStr)
+	rsDetailobj.Time, _ = time.Parse(time.RFC822, currentDateStr)
 	rsDetailobj.Duration=string(duration.Minutes())
 	bytes2, _ := json.Marshal(rsDetailobj)
 	err2 := stub.PutState(rsDetailobj.MSISDN,bytes2)
