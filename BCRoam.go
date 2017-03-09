@@ -133,15 +133,14 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 	} else if function == "enterData" {
 		fmt.Printf("Function is enterData")
 		return t.enterData(stub,args)
-	} else if function == "roamOnOff" {
-		fmt.Printf("Function is roamOnOff")
+	} else if function == "authentication" {
+		fmt.Printf("Function is authentication")
 		msisdn=args[0]
-		return t.roamOnOff(stub, msisdn)
+		return t.authentication(stub, msisdn)
 	}else if function == "updateRates" {
 		fmt.Printf("Function is updateRates")
-		val=args[0]
-		msisdn=args[1]
-		return t.updateRates(stub,msisdn,val)
+		msisdn=args[0]
+		return t.updateRates(stub,msisdn)
 	} 
         return nil, errors.New("Received unknown function invocation")
 }
@@ -310,7 +309,35 @@ func (t *SimpleChaincode) roamOnOff(stub shim.ChaincodeStubInterface, msisdn str
 //Update voice and data rates
 func (t *SimpleChaincode) updateRates(stub shim.ChaincodeStubInterface, msisdn string, val string) ([]byte, error) {
 	
-	
+        bytes, err := stub.GetState(msisdn)
+	if err != nil {
+		fmt.Println("Error - Could not get User details : %s", msisdn)
+		//return nil, err
+	} else {
+		fmt.Println("Success - User details found %s", msisdn)
+	}
+
+	var rsDetailobj rsDetailBlock
+	var sp,roam string
+	err = json.Unmarshal(bytes, &rsDetailobj)
+	if rsDetailobj.Roaming=="True"{
+		sp=rsDetailobj.RP
+		if sp=="Vodafone"{
+		    rsDetailObj.RateType = "Roaming"	
+		}
+	}
+	else{
+		
+	}
+	currentDateStr := time.Now().Format(time.RFC822)
+	rsDetailObj.Time, _ = time.Parse(time.RFC822, currentDateStr)
+	bytes2, _ := json.Marshal(rsDetailobj)
+	err2 := stub.PutState(rsDetailobj.MSISDN,bytes2)
+	if err2 != nil {
+		fmt.Println("Error - could not Marshall in msisdn")
+	} else {
+		fmt.Println("Success, updated record")
+	}
 	
 	return nil,nil
 }
