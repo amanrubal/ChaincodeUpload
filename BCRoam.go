@@ -45,7 +45,7 @@ type rsDetailBlock struct {
 	Roaming    string  `json:"roaming"`
 	Location   string  `json:"location"`
 	RateType   string  `json:"ratetype"`
-	Action  string `json:"action"`
+	Action     string `json:"action"`
 	TransType  string `json:"transtype"`
 	Destination string `json:"destination"`
 	Duration   string  `json:"duration"`
@@ -148,10 +148,6 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 		fmt.Printf("Function is CallEnd")
 		msisdn=args[0]
 		return t.CallEnd(stub,msisdn)
-	} else if function == "CallPay" {
-		fmt.Printf("Function is CallPay")
-		msisdn=args[0]
-		return t.CallPay(stub,msisdn)
 	} 
         return nil, errors.New("Received unknown function invocation")
 }
@@ -319,7 +315,7 @@ func (t *SimpleChaincode) roamOnOff(stub shim.ChaincodeStubInterface, msisdn str
 }
 
 //Update voice and data rates
-func (t *SimpleChaincode) updateRates(stub shim.ChaincodeStubInterface, msisdn string, val string) ([]byte, error) {
+func (t *SimpleChaincode) updateRates(stub shim.ChaincodeStubInterface, msisdn string) ([]byte, error) {
 	
         bytes, err := stub.GetState(msisdn)
 	if err != nil {
