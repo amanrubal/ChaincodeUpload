@@ -93,13 +93,13 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 	fmt.Println("Launching Init Function")
 	
 	//Inventory hard coded here
-	rs1:=rsDetailInit{"rs1","14691234567","A","DALLAS","AT&T","","FALSE","DALLAS","","","","","","","",""}
-	rs2:=rsDetailInit{"rs2","14691234568","A","DALLAS","AT&T","","FALSE","DALLAS","","","","","","","",""}
-	rs3:=rsDetailInit{"rs3","14691234569","A","DALLAS","AT&T","","FALSE","DALLAS","","","","","","","",""}
-	rs4:=rsDetailInit{"rs4","14691234570","A","DALLAS","AT&T","","FALSE","DALLAS","","","","","","","",""}
-	rs5:=rsDetailInit{"rs5","349091234567","A","BARCELONA","VODAFONE","","FALSE","DALLAS","","","","","","","",""}
-	rs6:=rsDetailInit{"rs6","349091234568","A","BARCELONA","VODAFONE","","FALSE","DALLAS","","","","","","","",""}
-	rs7:=rsDetailInit{"rs7","349091234569","A","BARCELONA","VODAFONE","","FALSE","DALLAS","","","","","","","",""}
+	rs1:=rsDetailBlock{"rs1","14691234567","A","DALLAS","AT&T","","FALSE","DALLAS","","","","","","","",""}
+	rs2:=rsDetailBlock{"rs2","14691234568","A","DALLAS","AT&T","","FALSE","DALLAS","","","","","","","",""}
+	rs3:=rsDetailBlock{"rs3","14691234569","A","DALLAS","AT&T","","FALSE","DALLAS","","","","","","","",""}
+	rs4:=rsDetailBlock{"rs4","14691234570","A","DALLAS","AT&T","","FALSE","DALLAS","","","","","","","",""}
+	rs5:=rsDetailBlock{"rs5","349091234567","A","BARCELONA","VODAFONE","","FALSE","DALLAS","","","","","","","",""}
+	rs6:=rsDetailBlock{"rs6","349091234568","A","BARCELONA","VODAFONE","","FALSE","DALLAS","","","","","","","",""}
+	rs7:=rsDetailBlock{"rs7","349091234569","A","BARCELONA","VODAFONE","","FALSE","DALLAS","","","","","","","",""}
 
 	//Create array for all adspots in ledger
 	//var AllPeersArray AllPeers
