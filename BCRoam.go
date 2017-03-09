@@ -264,7 +264,7 @@ func (t *SimpleChaincode) enterData(stub shim.ChaincodeStubInterface, args []str
 
 
 //putNetworkPeers: To put an array containing pointers to all blocks for a particular user(or peer) on the ledger
-func (t *SimpleChaincode) putMSIDN(stub shim.ChaincodeStubInterface,rs rsDetailInit,msisdn string) ([]byte, error) {
+func (t *SimpleChaincode) putMSIDN(stub shim.ChaincodeStubInterface,rs rsDetailBloack,msisdn string) ([]byte, error) {
 	//marshalling
 	fmt.Println(" Initializing msisdn: ", msisdn)
 	fmt.Printf("put details: %+v ", rs)
@@ -297,7 +297,7 @@ func (t *SimpleChaincode) discoverRP(stub shim.ChaincodeStubInterface, msisdn st
 	rsDetailobj.RP=sp
 	rsDetailobj.Location=loc
 	currentDateStr := time.Now().Format(time.RFC822)
-	rsDetailObj.Time, _ = time.Parse(time.RFC822, currentDateStr)
+	rsDetailobj.Time, _ = time.Parse(time.RFC822, currentDateStr)
 	bytes2, _ := json.Marshal(rsDetailobj)
 	err2 := stub.PutState(rsDetailobj.MSISDN,bytes2)
 	if err2 != nil {
@@ -331,7 +331,7 @@ func (t *SimpleChaincode) updateRates(stub shim.ChaincodeStubInterface, msisdn s
 	if rsDetailobj.Roaming=="True"{
 		sp=rsDetailobj.RP
 		if sp=="Vodafone"{
-		    rsDetailObj.RateType = "Roaming"	
+		    rsDetailobj.RateType = "Roaming"	
 		}
 	}
 	currentDateStr := time.Now().Format(time.RFC822)
