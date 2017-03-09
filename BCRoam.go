@@ -23,6 +23,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"time"
 
 	"github.com/hyperledger/fabric/core/chaincode/shim"
 )
@@ -49,7 +50,7 @@ type rsDetailBlock struct {
 	Duration   string  `json:"duration"`
 	Charges    string `json:"charges"`
 	Flag       string `json:"flag"`
-	Time       string `json:"time"`
+	Time        time.Time `json:"time"`
 } 
 
 type rsDetail struct {
@@ -66,7 +67,7 @@ type rsDetail struct {
 	DataL      string  `json:"float64"`
 	VoiceOutR  string `json:"voiceOutR"`
 	VoiceInR   string `json:"voiceInR"`
-	DataR      string `json:"dataR"`
+	DataR       time.Time `json:"dataR"`
 } 
 
 //This is a helper structure to point to allPeers
@@ -227,26 +228,21 @@ func (t *SimpleChaincode) enterData(stub shim.ChaincodeStubInterface, args []str
 		rsDetailObj.RP = args[4]   
 		rsDetailObj.Roaming = args[5]
 		rsDetailObj.Location = args[6]
-		rsDetailObj.Plan = args[7]
-		rsDetailObj.VoinceOutL = args[8]
-		rsDetailObj.VoinceInL = args[9]
-		rsDetailObj.DataL = args[10]     
-		rsDetailObj.VoiceOutR = args[11]
-		rsDetailObj.VoiceInR = args[12]
-		rsDetailObj.DataR = args[13]
-	
-	        Currbytes, err := stub.GetState(MSISDN)
-		if err != nil {
-			fmt.Println("Error - Could not get User details : %s", MSISDN)
-			//return nil, err
-		} else {
-			fmt.Println("Success - User details found %s %v", MSISDN ,string(Currbytes) )
-		}
+		rsDetailObj.RateType = args[8]
+		rsDetailObj.TransType = args[9]
+		rsDetailObj.Destination = args[10]     
+		rsDetailObj.Duration = args[11]
+		rsDetailObj.Charges = args[12]
+		rsDetailObj.Flag = args[13]
+	        //Get Current Time
+		currentDateStr := time.Now().Format(time.RFC822)
+		rsDetailObj.Time, _ = time.Parse(time.RFC822, currentDateStr)
+
 	
 	        fmt.Println(rsDetailObj)
 		bytes, _ := json.Marshal(rsDetailObj)
 	        fmt.Println(string(bytes))
-	        fmt.Printf("%x",bytes)
+	        //fmt.Printf("%x",bytes)
 		err2 := stub.PutState(rsDetailObj.MSISDN, bytes)
 		if err2 != nil {
 			fmt.Println("Error - could not Marshall in rsDetailObj")
@@ -293,6 +289,8 @@ func (t *SimpleChaincode) discoverRP(stub shim.ChaincodeStubInterface, msisdn st
 	err = json.Unmarshal(bytes, &rsDetailobj)
 	rsDetailobj.RP=sp
 	rsDetailobj.Location=loc
+	currentDateStr := time.Now().Format(time.RFC822)
+	rsDetailObj.Time, _ = time.Parse(time.RFC822, currentDateStr)
 	bytes2, _ := json.Marshal(rsDetailobj)
 	err2 := stub.PutState(rsDetailobj.MSISDN,bytes2)
 	if err2 != nil {
