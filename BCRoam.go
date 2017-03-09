@@ -135,10 +135,6 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 	} else if function == "enterData" {
 		fmt.Printf("Function is enterData")
 		return t.enterData(stub,args)
-	} else if function == "authentication" {
-		fmt.Printf("Function is authentication")
-		msisdn=args[0]
-		return t.authentication(stub, msisdn)
 	}else if function == "updateRates" {
 		fmt.Printf("Function is updateRates")
 		msisdn=args[0]
@@ -234,7 +230,7 @@ func (t *SimpleChaincode) queryMSISDN(stub shim.ChaincodeStubInterface,args []st
 func (t *SimpleChaincode) enterData(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
 
 	var MSISDN=args[0]
-	var rsDetailObj rsDetail
+	var rsDetailObj rsDetailBlock
 	        rsDetailObj.MSISDN = args[0]
 		rsDetailObj.Name = args[1]
 		rsDetailObj.Address = args[2]
