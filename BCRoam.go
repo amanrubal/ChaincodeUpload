@@ -91,13 +91,13 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 	fmt.Println("Launching Init Function")
 	
 	//Inventory hard coded here
-	rs1:=rsDetailInit{"rs1","14691234567","A","DALLAS","AT&T","","FALSE","DALLAS"}
-	rs2:=rsDetailInit{"rs2","14691234568","A","DALLAS","AT&T","","FALSE","DALLAS"}
-	rs3:=rsDetailInit{"rs3","14691234569","A","DALLAS","AT&T","","FALSE","DALLAS"}
-	rs4:=rsDetailInit{"rs4","14691234570","A","DALLAS","AT&T","","FALSE","DALLAS"}
-	rs5:=rsDetailInit{"rs5","349091234567","A","BARCELONA","VODAFONE","","FALSE","DALLAS"}
-	rs6:=rsDetailInit{"rs6","349091234568","A","BARCELONA","VODAFONE","","FALSE","DALLAS"}
-	rs7:=rsDetailInit{"rs7","349091234569","A","BARCELONA","VODAFONE","","FALSE","DALLAS"}
+	rs1:=rsDetailInit{"rs1","14691234567","A","DALLAS","AT&T","","FALSE","DALLAS","","","","","","",""}
+	rs2:=rsDetailInit{"rs2","14691234568","A","DALLAS","AT&T","","FALSE","DALLAS","","","","","","",""}
+	rs3:=rsDetailInit{"rs3","14691234569","A","DALLAS","AT&T","","FALSE","DALLAS","","","","","","",""}
+	rs4:=rsDetailInit{"rs4","14691234570","A","DALLAS","AT&T","","FALSE","DALLAS","","","","","","",""}
+	rs5:=rsDetailInit{"rs5","349091234567","A","BARCELONA","VODAFONE","","FALSE","DALLAS","","","","","","",""}
+	rs6:=rsDetailInit{"rs6","349091234568","A","BARCELONA","VODAFONE","","FALSE","DALLAS","","","","","","",""}
+	rs7:=rsDetailInit{"rs7","349091234569","A","BARCELONA","VODAFONE","","FALSE","DALLAS","","","","","","",""}
 
 	//Create array for all adspots in ledger
 	//var AllPeersArray AllPeers
@@ -120,14 +120,15 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 	fmt.Printf("Invoke called, determining function :%v",function)
 
 	showArgs(args)
-	var msisdn,val string
+	var msisdn,sp,loc string
 
 	// Handle different functions
 	if function == "discoverRP" {
 		fmt.Printf("Function is discoverRP")
-		val=args[0]
-		msisdn=args[1]
-		return t.discoverRP(stub,msisdn,val)
+		msisdn=args[0]
+		sp=args[1]
+		loc=args[2]
+		return t.discoverRP(stub,msisdn,sp,loc)
 	} else if function == "enterData" {
 		fmt.Printf("Function is enterData")
 		return t.enterData(stub,args)
@@ -278,7 +279,7 @@ func (t *SimpleChaincode) putMSIDN(stub shim.ChaincodeStubInterface,rs rsDetailI
 }
 
 //Remote Partner Discovery
-func (t *SimpleChaincode) discoverRP(stub shim.ChaincodeStubInterface, msisdn string,val string) ([]byte, error) {
+func (t *SimpleChaincode) discoverRP(stub shim.ChaincodeStubInterface, msisdn string,sp string,loc string) ([]byte, error) {
 
 	bytes, err := stub.GetState(msisdn)
 	if err != nil {
@@ -288,14 +289,14 @@ func (t *SimpleChaincode) discoverRP(stub shim.ChaincodeStubInterface, msisdn st
 		fmt.Println("Success - User details found %s", msisdn)
 	}
 
-	var rsDetailobj rsDetail
+	var rsDetailobj rsDetailBlock
 	err = json.Unmarshal(bytes, &rsDetailobj)
-	rsDetailobj.RP=val
+	rsDetailobj.RP=sp
+	rsDetailobj.Location=loc
 	bytes2, _ := json.Marshal(rsDetailobj)
-	err2 := stub.PutState(msisdn,bytes2)
+	err2 := stub.PutState(rsDetailobj.MSISDN,bytes2)
 	if err2 != nil {
 		fmt.Println("Error - could not Marshall in msisdn")
-		//return nil, err
 	} else {
 		fmt.Println("Success, updated record")
 	}
