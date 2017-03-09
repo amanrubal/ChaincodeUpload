@@ -392,7 +392,7 @@ func (t *SimpleChaincode) CallEnd(stub shim.ChaincodeStubInterface, msisdn strin
 	rsDetailobj.Action="Call End"
 	rsDetailobj.TransType="Call Out"
 	currentDateStr := time.Now().Format(time.RFC822)
-	duration := time.Since(then)
+	duration := time.Since(rsDetailobj.Time)
 	rsDetailobj.Time, _ = time.Parse(time.RFC822, currentDateStr)
 	rsDetailobj.Duration=string(duration.Minutes())
 	bytes2, _ := json.Marshal(rsDetailobj)
