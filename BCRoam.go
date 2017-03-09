@@ -24,6 +24,7 @@ import (
 	"errors"
 	"fmt"
 	"time"
+	"strconv"
 
 	"github.com/hyperledger/fabric/core/chaincode/shim"
 )
@@ -393,8 +394,9 @@ func (t *SimpleChaincode) CallEnd(stub shim.ChaincodeStubInterface, msisdn strin
 	rsDetailobj.TransType="Call Out"
 	currentDateStr := time.Now().Format(time.RFC822)
 	duration := time.Since(rsDetailobj.Time)
+	dur := strconv.FormatFloat(duration.Minutes(), 'E', -1, 64)
 	rsDetailobj.Time, _ = time.Parse(time.RFC822, currentDateStr)
-	rsDetailobj.Duration=string(duration.Minutes())
+	rsDetailobj.Duration=string(dur)
 	bytes2, _ := json.Marshal(rsDetailobj)
 	err2 := stub.PutState(rsDetailobj.MSISDN,bytes2)
 	if err2 != nil {
