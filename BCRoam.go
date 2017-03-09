@@ -341,9 +341,6 @@ func (t *SimpleChaincode) updateRates(stub shim.ChaincodeStubInterface, msisdn s
 		    rsDetailObj.RateType = "Roaming"	
 		}
 	}
-	else{
-		
-	}
 	currentDateStr := time.Now().Format(time.RFC822)
 	rsDetailObj.Time, _ = time.Parse(time.RFC822, currentDateStr)
 	bytes2, _ := json.Marshal(rsDetailobj)
@@ -387,7 +384,7 @@ func (t *SimpleChaincode) CallOut(stub shim.ChaincodeStubInterface, msisdn strin
 }
 
 //Call End
-func (t *SimpleChaincode) CallOut(stub shim.ChaincodeStubInterface, msisdn string) ([]byte, error) {
+func (t *SimpleChaincode) CallEnd(stub shim.ChaincodeStubInterface, msisdn string) ([]byte, error) {
 
 	bytes, err := stub.GetState(msisdn)
 	if err != nil {
