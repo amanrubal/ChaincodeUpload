@@ -142,6 +142,19 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 		fmt.Printf("Function is updateRates")
 		msisdn=args[0]
 		return t.updateRates(stub,msisdn)
+	} else if function == "CallOut" {
+		fmt.Printf("Function is CallOut")
+		msisdn=args[0]
+		destmsisdn=args[1]
+		return t.CallOut(stub,msisdn)
+	} else if function == "CallEnd" {
+		fmt.Printf("Function is CallEnd")
+		msisdn=args[0]
+		return t.CallEnd(stub,msisdn)
+	} else if function == "CallPay" {
+		fmt.Printf("Function is CallPay")
+		msisdn=args[0]
+		return t.CallPay(stub,msisdn)
 	} 
         return nil, errors.New("Received unknown function invocation")
 }
@@ -344,6 +357,64 @@ func (t *SimpleChaincode) updateRates(stub shim.ChaincodeStubInterface, msisdn s
 	return nil,nil
 }
 
+//Call Out
+func (t *SimpleChaincode) CallOut(stub shim.ChaincodeStubInterface, msisdn string,destmsisdn string) ([]byte, error) {
+
+	bytes, err := stub.GetState(msisdn)
+	if err != nil {
+		fmt.Println("Error - Could not get User details : %s", msisdn)
+		//return nil, err
+	} else {
+		fmt.Println("Success - User details found %s", msisdn)
+	}
+
+	var rsDetailobj rsDetailBlock
+	err = json.Unmarshal(bytes, &rsDetailobj)
+	rsDetailobj.Destination=destmsisdn
+	rsDetailobj.Action="Call Initialization"
+	rsDetailobj.TransType="Call Out"
+	currentDateStr := time.Now().Format(time.RFC822)
+	rsDetailObj.Time, _ = time.Parse(time.RFC822, currentDateStr)
+	bytes2, _ := json.Marshal(rsDetailobj)
+	err2 := stub.PutState(rsDetailobj.MSISDN,bytes2)
+	if err2 != nil {
+		fmt.Println("Error - could not Marshall in msisdn")
+	} else {
+		fmt.Println("Success, updated record")
+	}
+	
+	return nil,nil
+}
+
+//Call End
+func (t *SimpleChaincode) CallOut(stub shim.ChaincodeStubInterface, msisdn string) ([]byte, error) {
+
+	bytes, err := stub.GetState(msisdn)
+	if err != nil {
+		fmt.Println("Error - Could not get User details : %s", msisdn)
+		//return nil, err
+	} else {
+		fmt.Println("Success - User details found %s", msisdn)
+	}
+
+	var rsDetailobj rsDetailBlock
+	err = json.Unmarshal(bytes, &rsDetailobj)
+	rsDetailobj.Action="Call End"
+	rsDetailobj.TransType="Call Out"
+	currentDateStr := time.Now().Format(time.RFC822)
+	duration := time.Since(then)
+	rsDetailObj.Time, _ = time.Parse(time.RFC822, currentDateStr)
+	rsDetailobj.Duration=string(duration.Minutes())
+	bytes2, _ := json.Marshal(rsDetailobj)
+	err2 := stub.PutState(rsDetailobj.MSISDN,bytes2)
+	if err2 != nil {
+		fmt.Println("Error - could not Marshall in msisdn")
+	} else {
+		fmt.Println("Success, updated record")
+	}
+	
+	return nil,nil
+}
 
 	
 //MAIN FUNCTION
