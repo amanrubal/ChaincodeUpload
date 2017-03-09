@@ -143,7 +143,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 		fmt.Printf("Function is CallOut")
 		msisdn=args[0]
 		destmsisdn=args[1]
-		return t.CallOut(stub,msisdn)
+		return t.CallOut(stub,msisdn,destmsisdn)
 	} else if function == "CallEnd" {
 		fmt.Printf("Function is CallEnd")
 		msisdn=args[0]
