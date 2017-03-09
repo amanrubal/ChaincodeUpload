@@ -386,6 +386,36 @@ func (t *SimpleChaincode) CallEnd(stub shim.ChaincodeStubInterface, key string) 
 	return nil,nil
 }
 
+//Call Pay
+func (t *SimpleChaincode) CallPay(stub shim.ChaincodeStubInterface, key string) ([]byte, error) {
+
+	bytes, err := stub.GetState(key)
+	if err != nil {
+		fmt.Println("Error - Could not get User details : %s", key)
+		//return nil, err
+	} else {
+		fmt.Println("Success - User details found %s", key)
+	}
+
+	var rsDetailobj rsDetailBlock
+	err = json.Unmarshal(bytes, &rsDetailobj)
+	rsDetailobj.Action="Pay Charge"
+	rsDetailobj.TransType="Call Out"
+	currentDateStr := time.Now().Format(time.RFC822)
+	rsDetailobj.Charge="10"
+	rsDetailobj.Time, _ = time.Parse(time.RFC822, currentDateStr)
+	rsDetailobj.Duration=string(dur)
+	bytes2, _ := json.Marshal(rsDetailobj)
+	err2 := stub.PutState(rsDetailobj.PublicKey,bytes2)
+	if err2 != nil {
+		fmt.Println("Error - could not Marshall in msisdn")
+	} else {
+		fmt.Println("Success, updated record")
+	}
+	
+	return nil,nil
+}
+
 	
 //MAIN FUNCTION
 func main() {
