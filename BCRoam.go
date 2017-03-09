@@ -45,7 +45,8 @@ type rsDetailBlock struct {
 	Roaming    string  `json:"roaming"`
 	Location   string  `json:"location"`
 	RateType   string  `json:"ratetype"`
-	TransType  string `json:"action"`
+	Action  string `json:"action"`
+	TransType  string `json:"transtype"`
 	Destination string `json:"destination"`
 	Duration   string  `json:"duration"`
 	Charges    string `json:"charges"`
@@ -92,13 +93,13 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 	fmt.Println("Launching Init Function")
 	
 	//Inventory hard coded here
-	rs1:=rsDetailInit{"rs1","14691234567","A","DALLAS","AT&T","","FALSE","DALLAS","","","","","","",""}
-	rs2:=rsDetailInit{"rs2","14691234568","A","DALLAS","AT&T","","FALSE","DALLAS","","","","","","",""}
-	rs3:=rsDetailInit{"rs3","14691234569","A","DALLAS","AT&T","","FALSE","DALLAS","","","","","","",""}
-	rs4:=rsDetailInit{"rs4","14691234570","A","DALLAS","AT&T","","FALSE","DALLAS","","","","","","",""}
-	rs5:=rsDetailInit{"rs5","349091234567","A","BARCELONA","VODAFONE","","FALSE","DALLAS","","","","","","",""}
-	rs6:=rsDetailInit{"rs6","349091234568","A","BARCELONA","VODAFONE","","FALSE","DALLAS","","","","","","",""}
-	rs7:=rsDetailInit{"rs7","349091234569","A","BARCELONA","VODAFONE","","FALSE","DALLAS","","","","","","",""}
+	rs1:=rsDetailInit{"rs1","14691234567","A","DALLAS","AT&T","","FALSE","DALLAS","","","","","","","",""}
+	rs2:=rsDetailInit{"rs2","14691234568","A","DALLAS","AT&T","","FALSE","DALLAS","","","","","","","",""}
+	rs3:=rsDetailInit{"rs3","14691234569","A","DALLAS","AT&T","","FALSE","DALLAS","","","","","","","",""}
+	rs4:=rsDetailInit{"rs4","14691234570","A","DALLAS","AT&T","","FALSE","DALLAS","","","","","","","",""}
+	rs5:=rsDetailInit{"rs5","349091234567","A","BARCELONA","VODAFONE","","FALSE","DALLAS","","","","","","","",""}
+	rs6:=rsDetailInit{"rs6","349091234568","A","BARCELONA","VODAFONE","","FALSE","DALLAS","","","","","","","",""}
+	rs7:=rsDetailInit{"rs7","349091234569","A","BARCELONA","VODAFONE","","FALSE","DALLAS","","","","","","","",""}
 
 	//Create array for all adspots in ledger
 	//var AllPeersArray AllPeers
@@ -228,11 +229,12 @@ func (t *SimpleChaincode) enterData(stub shim.ChaincodeStubInterface, args []str
 		rsDetailObj.Roaming = args[5]
 		rsDetailObj.Location = args[6]
 		rsDetailObj.RateType = args[8]
-		rsDetailObj.TransType = args[9]
-		rsDetailObj.Destination = args[10]     
-		rsDetailObj.Duration = args[11]
-		rsDetailObj.Charges = args[12]
-		rsDetailObj.Flag = args[13]
+	        rsDetailObj.Action = args[9]
+		rsDetailObj.TransType = args[10]
+		rsDetailObj.Destination = args[11]     
+		rsDetailObj.Duration = args[12]
+		rsDetailObj.Charges = args[13]
+		rsDetailObj.Flag = args[14]
 	        //Get Current Time
 		currentDateStr := time.Now().Format(time.RFC822)
 		rsDetailObj.Time, _ = time.Parse(time.RFC822, currentDateStr)
