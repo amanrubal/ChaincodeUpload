@@ -69,7 +69,7 @@ type rsDetail struct {
 	DataL      string  `json:"float64"`
 	VoiceOutR  string `json:"voiceOutR"`
 	VoiceInR   string `json:"voiceInR"`
-	DataR       time.Time `json:"dataR"`
+	DataR      time.Time `json:"dataR"`
 } 
 
 //This is a helper structure to point to allPeers
@@ -106,13 +106,13 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 	//Create array for all adspots in ledger
 	//var AllPeersArray AllPeers
 
-	t.putMSIDN(stub,rs1, rs1.MSISDN)
-	t.putMSIDN(stub,rs2, rs2.MSISDN)
-	t.putMSIDN(stub,rs3, rs3.MSISDN)
-	t.putMSIDN(stub,rs4, rs4.MSISDN)
-	t.putMSIDN(stub,rs5, rs5.MSISDN)
-	t.putMSIDN(stub,rs6, rs6.MSISDN)
-	t.putMSIDN(stub,rs7, rs7.MSISDN)
+	t.putMSIDN(stub,rs1, rs1.PublicKey)
+	t.putMSIDN(stub,rs2, rs2.PublicKey)
+	t.putMSIDN(stub,rs3, rs3.PublicKey)
+	t.putMSIDN(stub,rs4, rs4.PublicKey)
+	t.putMSIDN(stub,rs5, rs5.PublicKey)
+	t.putMSIDN(stub,rs6, rs6.PublicKey)
+	t.putMSIDN(stub,rs7, rs7.PublicKey)
 
 	fmt.Println("Init Function Complete")
 	return nil, nil
@@ -124,31 +124,31 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 	fmt.Printf("Invoke called, determining function :%v",function)
 
 	showArgs(args)
-	var msisdn,sp,loc,destmsisdn string
+	var key,sp,loc,destmsisdn string
 
 	// Handle different functions
 	if function == "discoverRP" {
 		fmt.Printf("Function is discoverRP")
-		msisdn=args[0]
+		key=args[0]
 		sp=args[1]
 		loc=args[2]
-		return t.discoverRP(stub,msisdn,sp,loc)
+		return t.discoverRP(stub,key,sp,loc)
 	} else if function == "enterData" {
 		fmt.Printf("Function is enterData")
 		return t.enterData(stub,args)
 	}else if function == "updateRates" {
 		fmt.Printf("Function is updateRates")
-		msisdn=args[0]
-		return t.updateRates(stub,msisdn)
+		key=args[0]
+		return t.updateRates(stub,key)
 	} else if function == "CallOut" {
 		fmt.Printf("Function is CallOut")
-		msisdn=args[0]
+		key=args[0]
 		destmsisdn=args[1]
-		return t.CallOut(stub,msisdn,destmsisdn)
+		return t.CallOut(stub,key,destmsisdn)
 	} else if function == "CallEnd" {
 		fmt.Printf("Function is CallEnd")
-		msisdn=args[0]
-		return t.CallEnd(stub,msisdn)
+		key=args[0]
+		return t.CallEnd(stub,key)
 	} 
         return nil, errors.New("Received unknown function invocation")
 }
@@ -175,31 +175,13 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 
 //Redirect FUNCTIONS
 
-//Query peers in our network
-func (t *SimpleChaincode) queryPeers(stub shim.ChaincodeStubInterface,args []string) ([]byte, error) {
-	fmt.Println("queryPeers called")
-	var user string
-	user= args[0]
-	fmt.Println("User name: %v",user)
-	bytes,_:= stub.GetState(user)
-	var peer string
-	err := json.Unmarshal(bytes, &peer)
-	if err != nil{
-		fmt.Printf("Error in Unmarshalling")
-	} else {
-		fmt.Printf("Peer name: %v",peer)
-	}
-	return nil,nil
-}
-
-
 //Query MSISDN in our network
 func (t *SimpleChaincode) queryMSISDN(stub shim.ChaincodeStubInterface,args []string) ([]byte, error) {
 	fmt.Println("queryMSISDN called")
-	var msisdn string
-	msisdn= args[0]
-	fmt.Println("MSISDN: %v",msisdn)
-	bytes,_:= stub.GetState(msisdn)
+	var key string
+	key= args[0]
+	fmt.Println("Key: %v",key)
+	bytes,_:= stub.GetState(key)
 	fmt.Println(string(bytes))
 	fmt.Printf("%x",bytes)
 	/*var rsDetailObj rsDetail
@@ -228,20 +210,21 @@ func (t *SimpleChaincode) enterData(stub shim.ChaincodeStubInterface, args []str
 
 
 	var rsDetailObj rsDetailBlock
-	        rsDetailObj.MSISDN = args[0]
-		rsDetailObj.Name = args[1]
-		rsDetailObj.Address = args[2]
-		rsDetailObj.HO = args[3]
-		rsDetailObj.RP = args[4]   
-		rsDetailObj.Roaming = args[5]
-		rsDetailObj.Location = args[6]
-		rsDetailObj.RateType = args[8]
-	        rsDetailObj.Action = args[9]
-		rsDetailObj.TransType = args[10]
-		rsDetailObj.Destination = args[11]     
-		rsDetailObj.Duration = args[12]
-		rsDetailObj.Charges = args[13]
-		rsDetailObj.Flag = args[14]
+	        rsDetailObj.PublicKey = args[0]
+	        rsDetailObj.MSISDN = args[1]
+		rsDetailObj.Name = args[2]
+		rsDetailObj.Address = args[3]
+		rsDetailObj.HO = args[4]
+		rsDetailObj.RP = args[5]   
+		rsDetailObj.Roaming = args[6]
+		rsDetailObj.Location = args[7]
+		rsDetailObj.RateType = args[9]
+	        rsDetailObj.Action = args[10]
+		rsDetailObj.TransType = args[11]
+		rsDetailObj.Destination = args[12]     
+		rsDetailObj.Duration = args[13]
+		rsDetailObj.Charges = args[14]
+		rsDetailObj.Flag = args[15]
 	        //Get Current Time
 		currentDateStr := time.Now().Format(time.RFC822)
 		rsDetailObj.Time, _ = time.Parse(time.RFC822, currentDateStr)
@@ -251,7 +234,7 @@ func (t *SimpleChaincode) enterData(stub shim.ChaincodeStubInterface, args []str
 		bytes, _ := json.Marshal(rsDetailObj)
 	        fmt.Println(string(bytes))
 	        //fmt.Printf("%x",bytes)
-		err2 := stub.PutState(rsDetailObj.MSISDN, bytes)
+		err2 := stub.PutState(rsDetailObj.PublicKey, bytes)
 		if err2 != nil {
 			fmt.Println("Error - could not Marshall in rsDetailObj")
 		} else {
@@ -265,14 +248,14 @@ func (t *SimpleChaincode) enterData(stub shim.ChaincodeStubInterface, args []str
 
 
 //putNetworkPeers: To put an array containing pointers to all blocks for a particular user(or peer) on the ledger
-func (t *SimpleChaincode) putMSIDN(stub shim.ChaincodeStubInterface,rs rsDetailBlock,msisdn string) ([]byte, error) {
+func (t *SimpleChaincode) putMSIDN(stub shim.ChaincodeStubInterface,rs rsDetailBlock,key string) ([]byte, error) {
 	//marshalling
-	fmt.Println(" Initializing msisdn: ", msisdn)
+	fmt.Println(" Initializing msisdn: ", key)
 	fmt.Printf("put details: %+v ", rs)
 	fmt.Printf("\n")
 	bytes, _ := json.Marshal(rs)
 	fmt.Println(string(bytes))
-	err2 := stub.PutState(msisdn, bytes)
+	err2 := stub.PutState(key, bytes)
 	if err2 != nil {
 		fmt.Println("Error - could not Marshall in msisdn")
 		//return nil, err
@@ -283,14 +266,14 @@ func (t *SimpleChaincode) putMSIDN(stub shim.ChaincodeStubInterface,rs rsDetailB
 }
 
 //Remote Partner Discovery
-func (t *SimpleChaincode) discoverRP(stub shim.ChaincodeStubInterface, msisdn string,sp string,loc string) ([]byte, error) {
+func (t *SimpleChaincode) discoverRP(stub shim.ChaincodeStubInterface, key string,sp string,loc string) ([]byte, error) {
 
-	bytes, err := stub.GetState(msisdn)
+	bytes, err := stub.GetState(key)
 	if err != nil {
-		fmt.Println("Error - Could not get User details : %s", msisdn)
+		fmt.Println("Error - Could not get User details : %s", key)
 		//return nil, err
 	} else {
-		fmt.Println("Success - User details found %s", msisdn)
+		fmt.Println("Success - User details found %s", key)
 	}
 
 	var rsDetailobj rsDetailBlock
@@ -300,7 +283,7 @@ func (t *SimpleChaincode) discoverRP(stub shim.ChaincodeStubInterface, msisdn st
 	currentDateStr := time.Now().Format(time.RFC822)
 	rsDetailobj.Time, _ = time.Parse(time.RFC822, currentDateStr)
 	bytes2, _ := json.Marshal(rsDetailobj)
-	err2 := stub.PutState(rsDetailobj.MSISDN,bytes2)
+	err2 := stub.PutState(rsDetailobj.PublicKey,bytes2)
 	if err2 != nil {
 		fmt.Println("Error - could not Marshall in msisdn")
 	} else {
@@ -310,20 +293,16 @@ func (t *SimpleChaincode) discoverRP(stub shim.ChaincodeStubInterface, msisdn st
 	return nil,nil
 }
 
-//Roaming on and off
-func (t *SimpleChaincode) roamOnOff(stub shim.ChaincodeStubInterface, msisdn string) ([]byte, error) {
-	return nil,nil
-}
 
 //Update voice and data rates
-func (t *SimpleChaincode) updateRates(stub shim.ChaincodeStubInterface, msisdn string) ([]byte, error) {
+func (t *SimpleChaincode) updateRates(stub shim.ChaincodeStubInterface, key string) ([]byte, error) {
 	
-        bytes, err := stub.GetState(msisdn)
+        bytes, err := stub.GetState(key)
 	if err != nil {
-		fmt.Println("Error - Could not get User details : %s", msisdn)
+		fmt.Println("Error - Could not get User details : %s", key)
 		//return nil, err
 	} else {
-		fmt.Println("Success - User details found %s", msisdn)
+		fmt.Println("Success - User details found %s", key)
 	}
 
 	var rsDetailobj rsDetailBlock
@@ -338,7 +317,7 @@ func (t *SimpleChaincode) updateRates(stub shim.ChaincodeStubInterface, msisdn s
 	currentDateStr := time.Now().Format(time.RFC822)
 	rsDetailobj.Time, _ = time.Parse(time.RFC822, currentDateStr)
 	bytes2, _ := json.Marshal(rsDetailobj)
-	err2 := stub.PutState(rsDetailobj.MSISDN,bytes2)
+	err2 := stub.PutState(rsDetailobj.PublicKey,bytes2)
 	if err2 != nil {
 		fmt.Println("Error - could not Marshall in msisdn")
 	} else {
@@ -349,14 +328,14 @@ func (t *SimpleChaincode) updateRates(stub shim.ChaincodeStubInterface, msisdn s
 }
 
 //Call Out
-func (t *SimpleChaincode) CallOut(stub shim.ChaincodeStubInterface, msisdn string,destmsisdn string) ([]byte, error) {
+func (t *SimpleChaincode) CallOut(stub shim.ChaincodeStubInterface, key string,destmsisdn string) ([]byte, error) {
 
-	bytes, err := stub.GetState(msisdn)
+	bytes, err := stub.GetState(key)
 	if err != nil {
-		fmt.Println("Error - Could not get User details : %s", msisdn)
+		fmt.Println("Error - Could not get User details : %s", key)
 		//return nil, err
 	} else {
-		fmt.Println("Success - User details found %s", msisdn)
+		fmt.Println("Success - User details found %s", key)
 	}
 
 	var rsDetailobj rsDetailBlock
@@ -367,7 +346,7 @@ func (t *SimpleChaincode) CallOut(stub shim.ChaincodeStubInterface, msisdn strin
 	currentDateStr := time.Now().Format(time.RFC822)
 	rsDetailobj.Time, _ = time.Parse(time.RFC822, currentDateStr)
 	bytes2, _ := json.Marshal(rsDetailobj)
-	err2 := stub.PutState(rsDetailobj.MSISDN,bytes2)
+	err2 := stub.PutState(rsDetailobj.PublicKey,bytes2)
 	if err2 != nil {
 		fmt.Println("Error - could not Marshall in msisdn")
 	} else {
@@ -378,14 +357,14 @@ func (t *SimpleChaincode) CallOut(stub shim.ChaincodeStubInterface, msisdn strin
 }
 
 //Call End
-func (t *SimpleChaincode) CallEnd(stub shim.ChaincodeStubInterface, msisdn string) ([]byte, error) {
+func (t *SimpleChaincode) CallEnd(stub shim.ChaincodeStubInterface, key string) ([]byte, error) {
 
-	bytes, err := stub.GetState(msisdn)
+	bytes, err := stub.GetState(key)
 	if err != nil {
-		fmt.Println("Error - Could not get User details : %s", msisdn)
+		fmt.Println("Error - Could not get User details : %s", key)
 		//return nil, err
 	} else {
-		fmt.Println("Success - User details found %s", msisdn)
+		fmt.Println("Success - User details found %s", key)
 	}
 
 	var rsDetailobj rsDetailBlock
@@ -398,7 +377,7 @@ func (t *SimpleChaincode) CallEnd(stub shim.ChaincodeStubInterface, msisdn strin
 	rsDetailobj.Time, _ = time.Parse(time.RFC822, currentDateStr)
 	rsDetailobj.Duration=string(dur)
 	bytes2, _ := json.Marshal(rsDetailobj)
-	err2 := stub.PutState(rsDetailobj.MSISDN,bytes2)
+	err2 := stub.PutState(rsDetailobj.PublicKey,bytes2)
 	if err2 != nil {
 		fmt.Println("Error - could not Marshall in msisdn")
 	} else {
