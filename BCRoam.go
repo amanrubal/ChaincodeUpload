@@ -94,13 +94,13 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 	currentDateStr := time.Now().Format(time.RFC822)
 	currtime, _ := time.Parse(time.RFC822, currentDateStr)
 	//Inventory hard coded here
-	rs1:=rsDetailBlock{"rs1","14691234567","A","DALLAS","AT&T","","FALSE","DALLAS","","","","","","",currtime,""}
-	rs2:=rsDetailBlock{"rs2","14691234568","A","DALLAS","AT&T","","FALSE","DALLAS","","","","","","",currtime,""}
-	rs3:=rsDetailBlock{"rs3","14691234569","A","DALLAS","AT&T","","FALSE","DALLAS","","","","","","",currtime,""}
-	rs4:=rsDetailBlock{"rs4","14691234570","A","DALLAS","AT&T","","FALSE","DALLAS","","","","","","",currtime,""}
-	rs5:=rsDetailBlock{"rs5","349091234567","A","BARCELONA","VODAFONE","","FALSE","DALLAS","","","","","","",currtime,""}
-	rs6:=rsDetailBlock{"rs6","349091234568","A","BARCELONA","VODAFONE","","FALSE","DALLAS","","","","","","",currtime,""}
-	rs7:=rsDetailBlock{"rs7","349091234569","A","BARCELONA","VODAFONE","","FALSE","DALLAS","","","","","","",currtime,""}
+	rs1:=rsDetailBlock{"rs1","14691234567","A","DALLAS","AT&T","","FALSE","DALLAS","","","","","","","",currtime}
+	rs2:=rsDetailBlock{"rs2","14691234568","A","DALLAS","AT&T","","FALSE","DALLAS","","","","","","","",currtime}
+	rs3:=rsDetailBlock{"rs3","14691234569","A","DALLAS","AT&T","","FALSE","DALLAS","","","","","","","",currtime}
+	rs4:=rsDetailBlock{"rs4","14691234570","A","DALLAS","AT&T","","FALSE","DALLAS","","","","","","","",currtime}
+	rs5:=rsDetailBlock{"rs5","349091234567","A","BARCELONA","VODAFONE","","FALSE","DALLAS","","","","","","","",currtime}
+	rs6:=rsDetailBlock{"rs6","349091234568","A","BARCELONA","VODAFONE","","FALSE","DALLAS","","","","","","",""currtime}
+	rs7:=rsDetailBlock{"rs7","349091234569","A","BARCELONA","VODAFONE","","FALSE","DALLAS","","","","","","","",currtime}
 
 	//Create array for all adspots in ledger
 	//var AllPeersArray AllPeers
