@@ -226,7 +226,7 @@ func (t *SimpleChaincode) queryMSISDN(stub shim.ChaincodeStubInterface,args []st
 
 func (t *SimpleChaincode) enterData(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
 
-	var MSISDN=args[0]
+
 	var rsDetailObj rsDetailBlock
 	        rsDetailObj.MSISDN = args[0]
 		rsDetailObj.Name = args[1]
@@ -327,7 +327,7 @@ func (t *SimpleChaincode) updateRates(stub shim.ChaincodeStubInterface, msisdn s
 	}
 
 	var rsDetailobj rsDetailBlock
-	var sp,roam string
+	var sp string
 	err = json.Unmarshal(bytes, &rsDetailobj)
 	if rsDetailobj.Roaming=="True"{
 		sp=rsDetailobj.RP
