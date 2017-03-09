@@ -136,6 +136,10 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 	} else if function == "enterData" {
 		fmt.Printf("Function is enterData")
 		return t.enterData(stub,args)
+	}else if function == "authentication" {
+		fmt.Printf("Function is authentication")
+		key=args[0]
+		return t.authentication(stub,key)
 	}else if function == "updateRates" {
 		fmt.Printf("Function is updateRates")
 		key=args[0]
@@ -291,6 +295,36 @@ func (t *SimpleChaincode) discoverRP(stub shim.ChaincodeStubInterface, key strin
 	
 	return nil,nil
 }
+
+//Authentication
+func (t *SimpleChaincode) authentication(stub shim.ChaincodeStubInterface, key string) ([]byte, error) {
+
+	bytes, err := stub.GetState(key)
+	if err != nil {
+		fmt.Println("Error - Could not get User details : %s", key)
+		//return nil, err
+	} else {
+		fmt.Println("Success - User details found %s", key)
+	}
+
+	var rsDetailobj rsDetailBlock
+	err = json.Unmarshal(bytes, &rsDetailobj)
+	rsDetailobj.Roaming="True"
+	rsDetailobj.Action="Authentication"
+	rsDetailobj.TransType="Setup"
+	currentDateStr := time.Now().Format(time.RFC822)
+	rsDetailobj.Time, _ = time.Parse(time.RFC822, currentDateStr)
+	bytes2, _ := json.Marshal(rsDetailobj)
+	err2 := stub.PutState(rsDetailobj.PublicKey,bytes2)
+	if err2 != nil {
+		fmt.Println("Error - could not Marshall in msisdn")
+	} else {
+		fmt.Println("Success, updated record")
+	}
+	
+	return nil,nil
+}
+
 
 
 //Update voice and data rates
