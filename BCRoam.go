@@ -354,6 +354,8 @@ func (t *SimpleChaincode) updateRates(stub shim.ChaincodeStubInterface, key stri
 	}
 	currentDateStr := time.Now().Format(time.RFC822)
 	rsDetailobj.Time, _ = time.Parse(time.RFC822, currentDateStr)
+	rsDetailobj.Action="Register"
+	rsDetailobj.TransType="Setup"
 	bytes2, _ := json.Marshal(rsDetailobj)
 	err2 := stub.PutState(rsDetailobj.PublicKey,bytes2)
 	if err2 != nil {
