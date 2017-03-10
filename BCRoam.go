@@ -314,9 +314,14 @@ func (t *SimpleChaincode) authentication(stub shim.ChaincodeStubInterface, key s
 
 	var rsDetailobj rsDetailBlock
 	err = json.Unmarshal(bytes, &rsDetailobj)
+	
+	////// Add logic for authentication here
+	
 	rsDetailobj.Roaming="True"
 	rsDetailobj.Action="Authentication"
 	rsDetailobj.TransType="Setup"
+	
+	////////////////////////////////////////////
 	currentDateStr := time.Now().Format(time.RFC822)
 	rsDetailobj.Time, _ = time.Parse(time.RFC822, currentDateStr)
 	bytes2, _ := json.Marshal(rsDetailobj)
