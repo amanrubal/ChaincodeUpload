@@ -92,6 +92,7 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 	//var err error
 
 	fmt.Println("Launching Init Function")
+	//To add Time Stamp
 	currentDateStr := time.Now().Format(time.RFC822)
 	currtime, _ := time.Parse(time.RFC822, currentDateStr)
 	//Inventory hard coded here
@@ -153,6 +154,11 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 		fmt.Printf("Function is CallEnd")
 		key=args[0]
 		return t.CallEnd(stub,key)
+	} 
+	else if function == "CallPay" {
+		fmt.Printf("Function is CallPay")
+		key=args[0]
+		return t.CallPay(stub,key)
 	} 
         return nil, errors.New("Received unknown function invocation")
 }
@@ -388,6 +394,36 @@ func (t *SimpleChaincode) CallOut(stub shim.ChaincodeStubInterface, key string,d
 	
 	return nil,nil
 }
+
+//Call In
+func (t *SimpleChaincode) CallIn(stub shim.ChaincodeStubInterface, key string,destmsisdn string) ([]byte, error) {
+
+	bytes, err := stub.GetState(key)
+	if err != nil {
+		fmt.Println("Error - Could not get User details : %s", key)
+		//return nil, err
+	} else {
+		fmt.Println("Success - User details found %s", key)
+	}
+
+	var rsDetailobj rsDetailBlock
+	err = json.Unmarshal(bytes, &rsDetailobj)
+	rsDetailobj.Destination=destmsisdn
+	rsDetailobj.Action="Call Recieved"
+	rsDetailobj.TransType="Call In"
+	currentDateStr := time.Now().Format(time.RFC822)
+	rsDetailobj.Time, _ = time.Parse(time.RFC822, currentDateStr)
+	bytes2, _ := json.Marshal(rsDetailobj)
+	err2 := stub.PutState(rsDetailobj.PublicKey,bytes2)
+	if err2 != nil {
+		fmt.Println("Error - could not Marshall in msisdn")
+	} else {
+		fmt.Println("Success, updated record")
+	}
+	
+	return nil,nil
+}
+
 
 //Call End
 func (t *SimpleChaincode) CallEnd(stub shim.ChaincodeStubInterface, key string) ([]byte, error) {
