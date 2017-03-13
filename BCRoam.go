@@ -320,7 +320,7 @@ func (t *SimpleChaincode) authentication(stub shim.ChaincodeStubInterface, key s
 	rp=rsDetailobj.RP
 	
 	////// Add logic for authentication here
-	if rp=="Vodafone" {
+	if rp=="VODAFONE" {
 		if ho=="AT&T"{
 			rsDetailobj.Roaming="True"
 			rsDetailobj.Action="Authentication"
@@ -328,7 +328,7 @@ func (t *SimpleChaincode) authentication(stub shim.ChaincodeStubInterface, key s
 			fmt.Println("Authentication suucessfull")
 			}
 	}else if rp=="AT&T"{
-		if ho=="Vodafone"{
+		if ho=="VODAFONE"{
 			rsDetailobj.Roaming="True"
 			rsDetailobj.Action="Authentication"
 			rsDetailobj.TransType="Setup"
