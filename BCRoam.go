@@ -374,7 +374,7 @@ func (t *SimpleChaincode) updateRates(stub shim.ChaincodeStubInterface, key stri
 	err = json.Unmarshal(bytes, &rsDetailobj)
 	if rsDetailobj.Roaming=="True"{
 		sp=rsDetailobj.RP
-		if sp=="Vodafone"{
+		if sp=="VODAFONE"{
 		    rsDetailobj.RateType = "Roaming"	
 		}
 	}
