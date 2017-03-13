@@ -311,15 +311,36 @@ func (t *SimpleChaincode) authentication(stub shim.ChaincodeStubInterface, key s
 	} else {
 		fmt.Println("Success - User details found %s", key)
 	}
+	
+	var ho , rp string
 
 	var rsDetailobj rsDetailBlock
 	err = json.Unmarshal(bytes, &rsDetailobj)
+	ho=rsDetailobj.HO
+	rp=rsDetailobj.RP
 	
 	////// Add logic for authentication here
+	if rp=="Vodafone" {
+		if ho=="AT&T"{
+			rsDetailobj.Roaming="True"
+			rsDetailobj.Action="Authentication"
+			rsDetailobj.TransType="Setup"
+			fmt.Println("Authentication suucessfull")
+			}
+	}else if rp=="AT&T"{
+		if ho=="Vodafone"{
+			rsDetailobj.Roaming="True"
+			rsDetailobj.Action="Authentication"
+			rsDetailobj.TransType="Setup"
+			fmt.Println("Authentication Successfull")
+			}
+	}else{
+		fmt.Println("Authentication Failed")
+	}
 	
-	rsDetailobj.Roaming="True"
-	rsDetailobj.Action="Authentication"
-	rsDetailobj.TransType="Setup"
+	//rsDetailobj.Roaming="True"
+	//rsDetailobj.Action="Authentication"
+	//rsDetailobj.TransType="Setup"
 	
 	////////////////////////////////////////////
 	currentDateStr := time.Now().Format(time.RFC822)
