@@ -158,6 +158,11 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 		key = args[0]
 		return t.CallPay(stub, key)
 	}
+	else if function == "Overage" {
+		fmt.Printf("Function is Overage")
+		key = args[0]
+		return t.Overage(stub, key)
+	}
 	return nil, errors.New("Received unknown function invocation")
 }
 
@@ -230,7 +235,6 @@ func (t *SimpleChaincode) enterData(stub shim.ChaincodeStubInterface, args []str
 	rsDetailObj.Duration = args[13]
 	rsDetailObj.Charges = args[14]
 	rsDetailObj.Flag = args[15]
-	msisdnList = append(msisdnList,rsDetailObj.MSISDN)
 	//Get Current Time
 	currentDateStr := time.Now().Format(time.RFC822)
 	rsDetailObj.Time, _ = time.Parse(time.RFC822, currentDateStr)
@@ -260,7 +264,6 @@ func (t *SimpleChaincode) putMSIDN(stub shim.ChaincodeStubInterface, rs rsDetail
 	bytes, _ := json.Marshal(rs)
 	fmt.Println(string(bytes))
 	err2 := stub.PutState(key, bytes)
-	msisdnList = append(msisdnList,rs.MSISDN)
 	
 	if err2 != nil {
 		fmt.Println("Error - could not Marshall in msisdn")
@@ -359,6 +362,7 @@ func (t *SimpleChaincode) authentication(stub shim.ChaincodeStubInterface, key s
 	} else {
 		fmt.Println("Success, updated record")
 	}
+	msisdnList = append(msisdnList,rsDetailObj.MSISDN)
 
 	return nil, nil
 }
