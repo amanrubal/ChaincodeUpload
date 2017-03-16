@@ -430,7 +430,7 @@ func (t *SimpleChaincode) CallOut(stub shim.ChaincodeStubInterface, key string, 
 	return nil, nil
 }
 
-func (t *SimpleChaincode) Overage(stub shim.ChaincodeStubInterface, key string, destmsisdn string) ([]byte, error) {
+func (t *SimpleChaincode) Overage(stub shim.ChaincodeStubInterface, key string) ([]byte, error) {
 
 	bytes, err := stub.GetState(key)
 	if err != nil {
@@ -442,7 +442,6 @@ func (t *SimpleChaincode) Overage(stub shim.ChaincodeStubInterface, key string, 
 
 	var rsDetailobj rsDetailBlock
 	err = json.Unmarshal(bytes, &rsDetailobj)
-	rsDetailobj.Destination = destmsisdn
 	rsDetailobj.Action = "OverageCheck"
 	rsDetailobj.TransType = "Call Out"
 	rsDetailobj.Flag= "OVERAGE"
