@@ -442,11 +442,16 @@ func (t *SimpleChaincode) Overage(stub shim.ChaincodeStubInterface, key string, 
 	rsDetailobj.Destination = destmsisdn
 	rsDetailobj.Action = "OverageCheck"
 	rsDetailobj.TransType = "Call Out"
+	rsDetailobj.Flag= "OVERAGE"
 	currentDateStr := time.Now().Format(time.RFC822)
 	rsDetailobj.Time, _ = time.Parse(time.RFC822, currentDateStr)
 	bytes2, _ := json.Marshal(rsDetailobj)
 	err2 := stub.PutState(rsDetailobj.PublicKey, bytes2)
-	rsDetailobj.Flag= "OVERAGE"
+	if err2 != nil {
+		fmt.Println("Error - could not Marshall in msisdn")
+	} else {
+		fmt.Println("Success, updated record")
+	}
 	
 
 	return nil, nil
