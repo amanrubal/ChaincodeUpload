@@ -361,7 +361,7 @@ func (t *SimpleChaincode) authentication(stub shim.ChaincodeStubInterface, key s
 	} else {
 		fmt.Println("Success, updated record")
 	}
-	msisdnList = append(msisdnList,rsDetailObj.MSISDN)
+	msisdnList = append(msisdnList,rsDetailobj.MSISDN)
 
 	return nil, nil
 }
