@@ -157,8 +157,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 		fmt.Printf("Function is CallPay")
 		key = args[0]
 		return t.CallPay(stub, key)
-	}
-	else if function == "Overage" {
+	} else if function == "Overage" {
 		fmt.Printf("Function is Overage")
 		key = args[0]
 		return t.Overage(stub, key)
