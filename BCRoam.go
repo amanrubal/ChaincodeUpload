@@ -27,7 +27,7 @@ import (
 	"github.com/hyperledger/fabric/core/chaincode/shim"
 )
 
-var msisdnList[] String
+var msisdnList[] string
 // SimpleChaincode example simple Chaincode implementation
 type SimpleChaincode struct {
 }
