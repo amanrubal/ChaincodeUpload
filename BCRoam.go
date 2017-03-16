@@ -418,10 +418,6 @@ func (t *SimpleChaincode) CallOut(stub shim.ChaincodeStubInterface, key string, 
 	rsDetailobj.Time, _ = time.Parse(time.RFC822, currentDateStr)
 	bytes2, _ := json.Marshal(rsDetailobj)
 	err2 := stub.PutState(rsDetailobj.PublicKey, bytes2)
-	if rsDetailobj.PublicKey == "rs5"
-	{
-		rsDetailobj.Flag= "OVERAGE"
-	}
 	if err2 != nil {
 		fmt.Println("Error - could not Marshall in msisdn")
 	} else {
