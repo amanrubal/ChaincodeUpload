@@ -43,6 +43,8 @@ type rsDetailBlock struct {
 	RP          string    `json:"rp"`
 	Roaming     string    `json:"roaming"`
 	Location    string    `json:"location"`
+	Lat    	    string    `json:"lat"`
+	Long        string    `json:"long"`
 	RateType    string    `json:"ratetype"`
 	Action      string    `json:"action"`
 	TransType   string    `json:"transtype"`
