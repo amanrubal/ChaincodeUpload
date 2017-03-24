@@ -97,13 +97,13 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 	currentDateStr := time.Now().Format(time.RFC822)
 	currtime, _ := time.Parse(time.RFC822, currentDateStr)
 	//Inventory hard coded here
-	rs1 := rsDetailBlock{"rs1", "14691234567", "A", "DALLAS", "AT&T", "", "FALSE", "DALLAS", "", "", "", "", "", "", "", currtime}
-	rs2 := rsDetailBlock{"rs2", "14691234568", "A", "DALLAS", "AT&T", "", "FALSE", "DALLAS", "", "", "", "", "", "", "", currtime}
-	rs3 := rsDetailBlock{"rs3", "14691234569", "A", "DALLAS", "AT&T", "", "FALSE", "DALLAS", "", "", "", "", "", "", "", currtime}
-	rs4 := rsDetailBlock{"rs4", "14691234570", "A", "DALLAS", "AT&T", "", "FALSE", "DALLAS", "", "", "", "", "", "", "", currtime}
-	rs5 := rsDetailBlock{"rs5", "349091234567", "A", "BARCELONA", "VODAFONE", "", "FALSE", "DALLAS", "", "", "", "", "", "", "", currtime}
-	rs6 := rsDetailBlock{"rs6", "349091234568", "A", "BARCELONA", "VODAFONE", "", "FALSE", "DALLAS", "", "", "", "", "", "", "", currtime}
-	rs7 := rsDetailBlock{"rs7", "349091234569", "A", "BARCELONA", "VODAFONE", "", "FALSE", "DALLAS", "", "", "", "", "", "", "", currtime}
+	rs1 := rsDetailBlock{"rs1", "14691234567", "A", "DALLAS", "AT&T", "", "FALSE", "DALLAS","32.942746","-96.994838","", "", "", "", "", "", "", currtime}
+	rs2 := rsDetailBlock{"rs2", "14691234568", "A", "DALLAS", "AT&T", "", "FALSE", "DALLAS","32.942746","-96.994838","", "", "", "", "", "", "", currtime}
+	rs3 := rsDetailBlock{"rs3", "14691234569", "A", "DALLAS", "AT&T", "", "FALSE", "DALLAS","32.942746","-96.994838","", "", "", "", "", "", "", currtime}
+	rs4 := rsDetailBlock{"rs4", "14691234570", "A", "DALLAS", "AT&T", "", "FALSE", "DALLAS","32.942746","-96.994838","", "", "", "", "", "", "", currtime}
+	rs5 := rsDetailBlock{"rs5", "349091234567", "A", "BARCELONA", "VODAFONE", "", "FALSE", "BARCELONA","41.385064","2.173403","", "", "", "", "", "", "", currtime}
+	rs6 := rsDetailBlock{"rs6", "349091234568", "A", "BARCELONA", "VODAFONE", "", "FALSE", "BARCELONA","41.385064","2.173403","", "", "", "", "", "", "", currtime}
+	rs7 := rsDetailBlock{"rs7", "349091234569", "A", "BARCELONA", "VODAFONE", "", "FALSE", "BARCELONA","41.385064","2.173403","", "", "", "", "", "", "", currtime}
 
 	//Create array for all adspots in ledger
 	//var AllPeersArray AllPeers
@@ -134,6 +134,8 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 		key = args[0]
 		sp = args[1]
 		loc = args[2]
+		lat = args[3]
+		long = args[4]
 		return t.discoverRP(stub, key, sp, loc)
 	} else if function == "enterData" {
 		fmt.Printf("Function is enterData")
@@ -290,6 +292,8 @@ func (t *SimpleChaincode) discoverRP(stub shim.ChaincodeStubInterface, key strin
 	err = json.Unmarshal(bytes, &rsDetailobj)
 	rsDetailobj.RP = sp
 	rsDetailobj.Location = loc
+	rsDetailobj.Lat = lat
+	rsDetailobj.Long = long
 	rsDetailobj.Action = "Discovery"
 	rsDetailobj.TransType = "Setup"
 	currentDateStr := time.Now().Format(time.RFC822)
