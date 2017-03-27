@@ -126,7 +126,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 	fmt.Printf("Invoke called, determining function :%v", function)
 
 	showArgs(args)
-	var key, sp, loc, destmsisdn string
+	var key, sp, loc, lat,long, destmsisdn string
 
 	// Handle different functions
 	if function == "discoverRP" {
@@ -136,7 +136,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 		loc = args[2]
 		lat = args[3]
 		long = args[4]
-		return t.discoverRP(stub, key, sp, loc)
+		return t.discoverRP(stub, key, sp, loc,lat,long)
 	} else if function == "enterData" {
 		fmt.Printf("Function is enterData")
 		return t.enterData(stub, args)
@@ -278,7 +278,7 @@ func (t *SimpleChaincode) putMSIDN(stub shim.ChaincodeStubInterface, rs rsDetail
 }
 
 //Remote Partner Discovery
-func (t *SimpleChaincode) discoverRP(stub shim.ChaincodeStubInterface, key string, sp string, loc string) ([]byte, error) {
+func (t *SimpleChaincode) discoverRP(stub shim.ChaincodeStubInterface, key string, sp string, loc string,lat string,long string) ([]byte, error) {
 
 	bytes, err := stub.GetState(key)
 	if err != nil {
