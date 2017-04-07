@@ -120,6 +120,37 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 	return nil, nil
 }
 
+func (t *SimpleChaincode) resetInventory(stub shim.ChaincodeStubInterface) ([]byte, error) {
+
+	fmt.Println("resetting Inventory")
+	//To add Time Stamp
+	currentDateStr := time.Now().Format(time.RFC822)
+	currtime, _ := time.Parse(time.RFC822, currentDateStr)
+	//Inventory hard coded here
+	rs1 := rsDetailBlock{"rs1", "14691234567", "A", "DALLAS", "AT&T", "", "FALSE", "DALLAS","32.942746","-96.994838","", "", "", "", "", "", "", currtime}
+	rs2 := rsDetailBlock{"rs2", "14691234568", "A", "DALLAS", "AT&T", "", "FALSE", "DALLAS","32.942746","-96.994838","", "", "", "", "", "", "", currtime}
+	rs3 := rsDetailBlock{"rs3", "14691234569", "A", "DALLAS", "AT&T", "", "FALSE", "DALLAS","32.942746","-96.994838","", "", "", "", "", "", "", currtime}
+	rs4 := rsDetailBlock{"rs4", "14691234570", "A", "DALLAS", "AT&T", "", "FALSE", "DALLAS","32.942746","-96.994838","", "", "", "", "", "", "", currtime}
+	rs5 := rsDetailBlock{"rs5", "349091234567", "A", "BARCELONA", "VODAFONE", "", "FALSE", "BARCELONA","41.385064","2.173403","", "", "", "", "", "", "", currtime}
+	rs6 := rsDetailBlock{"rs6", "349091234568", "A", "BARCELONA", "VODAFONE", "", "FALSE", "BARCELONA","41.385064","2.173403","", "", "", "", "", "", "", currtime}
+	rs7 := rsDetailBlock{"rs7", "349091234569", "A", "BARCELONA", "VODAFONE", "", "FALSE", "BARCELONA","41.385064","2.173403","", "", "", "", "", "", "", currtime}
+
+	//Create array for all adspots in ledger
+	//var AllPeersArray AllPeers
+
+	t.putMSIDN(stub, rs1, rs1.PublicKey)
+	t.putMSIDN(stub, rs2, rs2.PublicKey)
+	t.putMSIDN(stub, rs3, rs3.PublicKey)
+	t.putMSIDN(stub, rs4, rs4.PublicKey)
+	t.putMSIDN(stub, rs5, rs5.PublicKey)
+	t.putMSIDN(stub, rs6, rs6.PublicKey)
+	t.putMSIDN(stub, rs7, rs7.PublicKey)
+
+	fmt.Println("Init Function Complete")
+	return nil, nil
+
+}
+
 //Invoke function
 
 func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
