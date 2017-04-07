@@ -196,6 +196,9 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 		fmt.Printf("Function is Overage")
 		key = args[0]
 		return t.Overage(stub, key)
+	} else if function == "resetInventory" {
+		fmt.Printf("Function is resetInventory")
+		return t.Overage(stub)
 	}
 	return nil, errors.New("Received unknown function invocation")
 }
