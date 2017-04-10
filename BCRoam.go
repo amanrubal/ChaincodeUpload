@@ -28,6 +28,7 @@ import (
 )
 
 var msisdnList[] string
+var blankList[] string
 // SimpleChaincode example simple Chaincode implementation
 type SimpleChaincode struct {
 }
@@ -148,7 +149,7 @@ func (t *SimpleChaincode) resetInventory(stub shim.ChaincodeStubInterface) ([]by
 
 	fmt.Println("Reset Function Complete")
 	
-	msisdnList=[""]
+	msisdnList=blankList
 	
 	return nil, nil
 
