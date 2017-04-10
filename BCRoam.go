@@ -146,7 +146,10 @@ func (t *SimpleChaincode) resetInventory(stub shim.ChaincodeStubInterface) ([]by
 	t.putMSIDN(stub, rs6, rs6.PublicKey)
 	t.putMSIDN(stub, rs7, rs7.PublicKey)
 
-	fmt.Println("Init Function Complete")
+	fmt.Println("Reset Function Complete")
+	
+	msisdnList=[]
+	
 	return nil, nil
 
 }
