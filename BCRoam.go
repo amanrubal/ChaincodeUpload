@@ -269,13 +269,15 @@ func (t *SimpleChaincode) enterData(stub shim.ChaincodeStubInterface, args []str
 	rsDetailObj.RP = args[5]
 	rsDetailObj.Roaming = args[6]
 	rsDetailObj.Location = args[7]
-	rsDetailObj.RateType = args[9]
-	rsDetailObj.Action = args[10]
-	rsDetailObj.TransType = args[11]
-	rsDetailObj.Destination = args[12]
-	rsDetailObj.Duration = args[13]
-	rsDetailObj.Charges = args[14]
-	rsDetailObj.Flag = args[15]
+	rsDetailObj.Location = args[8]
+	rsDetailObj.Location = args[9]
+	rsDetailObj.RateType = args[10]
+	rsDetailObj.Action = args[11]
+	rsDetailObj.TransType = args[12]
+	rsDetailObj.Destination = args[13]
+	rsDetailObj.Duration = args[14]
+	rsDetailObj.Charges = args[15]
+	rsDetailObj.Flag = args[16]
 	//Get Current Time
 	currentDateStr := time.Now().Format(time.RFC822)
 	rsDetailObj.Time, _ = time.Parse(time.RFC822, currentDateStr)
