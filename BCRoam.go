@@ -162,7 +162,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 
 	showArgs(args)
 	var key, sp, loc, lat,long,msisdn,name,address,ho, destmsisdn string
-    var val [] string
+
 	// Handle different functions
 	if function == "discoverRP" {
 		fmt.Printf("Function is discoverRP")
