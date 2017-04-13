@@ -172,9 +172,6 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 		lat = args[3]
 		long = args[4]
 		return t.discoverRP(stub, key, sp, loc,lat,long)
-	} else if function == "enterData" {
-		fmt.Printf("Function is enterData")
-		return t.enterData(stub, args)
 	} else if function == "authentication" {
 		fmt.Printf("Function is authentication")
 		key = args[0]
