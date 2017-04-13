@@ -205,8 +205,14 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 		return t.resetInventory(stub)
 	}else if function == "enterData" {
 		fmt.Printf("Function is resetInventory")
-		val[] = args[0]
-		return t.enterData(stub,val)
+		key =args[0]
+		msisdn =args[1]
+		name =args[2]
+		address =args[3]
+		ho =args[4]
+		lat =args[5]
+		long =args[6]
+		return t.enterData(stub,key,msisdn,name,address,ho,lat,long)
 	}
 	return nil, errors.New("Received unknown function invocation")
 }
@@ -262,19 +268,19 @@ func (t *SimpleChaincode) queryMSISDN(stub shim.ChaincodeStubInterface, args []s
 	return bytes, nil
 }
 
-func (t *SimpleChaincode) enterData(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
+func (t *SimpleChaincode) enterData(stub shim.ChaincodeStubInterface, key string,msisdn string,name string,address string,ho string,lat string,long string) ([]byte, error) {
 
 	var rsDetailObj rsDetailBlock
-	rsDetailObj.PublicKey = args[0]
-	rsDetailObj.MSISDN = args[1]
-	rsDetailObj.Name = args[2]
-	rsDetailObj.Address = args[3]
-	rsDetailObj.HO = args[4]
-	rsDetailObj.RP = args[5]
-	rsDetailObj.Roaming = args[6]
-	rsDetailObj.Location = args[7]
-	rsDetailObj.Lat = args[8]
-	rsDetailObj.Long = args[9]
+	rsDetailObj.PublicKey = key
+	rsDetailObj.MSISDN = msisdn
+	rsDetailObj.Name = name
+	rsDetailObj.Address = address
+	rsDetailObj.HO = ho
+	rsDetailObj.RP = ""
+	rsDetailObj.Roaming = "FALSE"
+	rsDetailObj.Location = address
+	rsDetailObj.Lat = lat
+	rsDetailObj.Long = long
 	rsDetailObj.RateType = ""
 	rsDetailObj.Action = ""
 	rsDetailObj.TransType = ""
