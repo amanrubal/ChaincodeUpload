@@ -266,18 +266,18 @@ func (t *SimpleChaincode) enterData(stub shim.ChaincodeStubInterface, args []str
 	rsDetailObj.Name = args[2]
 	rsDetailObj.Address = args[3]
 	rsDetailObj.HO = args[4]
-	rsDetailObj.RP = args[5]
-	rsDetailObj.Roaming = args[6]
+	rsDetailObj.RP = ""
+	rsDetailObj.Roaming = "FALSE"
 	rsDetailObj.Location = args[7]
-	rsDetailObj.Location = args[8]
-	rsDetailObj.Location = args[9]
-	rsDetailObj.RateType = args[10]
-	rsDetailObj.Action = args[11]
-	rsDetailObj.TransType = args[12]
-	rsDetailObj.Destination = args[13]
-	rsDetailObj.Duration = args[14]
-	rsDetailObj.Charges = args[15]
-	rsDetailObj.Flag = args[16]
+	rsDetailObj.Lat = args[8]
+	rsDetailObj.Long = args[9]
+	rsDetailObj.RateType = ""
+	rsDetailObj.Action = ""
+	rsDetailObj.TransType = ""
+	rsDetailObj.Destination = ""
+	rsDetailObj.Duration = ""
+	rsDetailObj.Charges = ""
+	rsDetailObj.Flag = ""
 	//Get Current Time
 	currentDateStr := time.Now().Format(time.RFC822)
 	rsDetailObj.Time, _ = time.Parse(time.RFC822, currentDateStr)
@@ -285,15 +285,13 @@ func (t *SimpleChaincode) enterData(stub shim.ChaincodeStubInterface, args []str
 	fmt.Println(rsDetailObj)
 	bytes, _ := json.Marshal(rsDetailObj)
 	fmt.Println(string(bytes))
-	//fmt.Printf("%x",bytes)
+
 	err2 := stub.PutState(rsDetailObj.PublicKey, bytes)
 	if err2 != nil {
 		fmt.Println("Error - could not Marshall in rsDetailObj")
 	} else {
 		fmt.Println("Success -  works")
 	}
-
-	//showArgs(args)
 
 	return nil, nil
 }
