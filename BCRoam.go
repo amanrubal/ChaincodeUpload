@@ -162,7 +162,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 
 	showArgs(args)
 	var key, sp, loc, lat,long, destmsisdn string
-
+    var val [] string
 	// Handle different functions
 	if function == "discoverRP" {
 		fmt.Printf("Function is discoverRP")
@@ -205,7 +205,8 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 		return t.resetInventory(stub)
 	}else if function == "enterData" {
 		fmt.Printf("Function is resetInventory")
-		return t.enterData(stub,args)
+		val[] = args[0]
+		return t.enterData(stub,val)
 	}
 	return nil, errors.New("Received unknown function invocation")
 }
