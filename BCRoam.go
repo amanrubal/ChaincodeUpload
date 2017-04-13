@@ -204,6 +204,10 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 		fmt.Printf("Function is resetInventory")
 		return t.resetInventory(stub)
 	}
+	else if function == "enterData" {
+		fmt.Printf("Function is resetInventory")
+		return t.enterData(stub,args)
+	}
 	return nil, errors.New("Received unknown function invocation")
 }
 
