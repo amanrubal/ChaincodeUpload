@@ -203,8 +203,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 	} else if function == "resetInventory" {
 		fmt.Printf("Function is resetInventory")
 		return t.resetInventory(stub)
-	}
-	else if function == "enterData" {
+	}else if function == "enterData" {
 		fmt.Printf("Function is resetInventory")
 		return t.enterData(stub,args)
 	}
