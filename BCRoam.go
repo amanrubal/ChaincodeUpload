@@ -463,6 +463,8 @@ func (t *SimpleChaincode) CallOut(stub shim.ChaincodeStubInterface, key string, 
 	rsDetailobj.Destination = destmsisdn
 	rsDetailobj.Action = "Call Initialization"
 	rsDetailobj.TransType = "Call Out"
+	rsDetailobj.Duration = ""
+	rsDetailobj.Charges = ""
 	currentDateStr := time.Now().Format(time.RFC822)
 	rsDetailobj.Time, _ = time.Parse(time.RFC822, currentDateStr)
 	bytes2, _ := json.Marshal(rsDetailobj)
@@ -521,6 +523,7 @@ func (t *SimpleChaincode) CallIn(stub shim.ChaincodeStubInterface, key string, d
 	rsDetailobj.Destination = destmsisdn
 	rsDetailobj.Action = "Call Recieved"
 	rsDetailobj.TransType = "Call In"
+	rsDetailobj.Duration = ""
 	currentDateStr := time.Now().Format(time.RFC822)
 	rsDetailobj.Time, _ = time.Parse(time.RFC822, currentDateStr)
 	bytes2, _ := json.Marshal(rsDetailobj)
