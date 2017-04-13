@@ -269,8 +269,8 @@ func (t *SimpleChaincode) enterData(stub shim.ChaincodeStubInterface, args []str
 	rsDetailObj.Name = args[2]
 	rsDetailObj.Address = args[3]
 	rsDetailObj.HO = args[4]
-	rsDetailObj.RP = ""
-	rsDetailObj.Roaming = "FALSE"
+	rsDetailObj.RP = args[5]
+	rsDetailObj.Roaming = args[6]
 	rsDetailObj.Location = args[7]
 	rsDetailObj.Lat = args[8]
 	rsDetailObj.Long = args[9]
