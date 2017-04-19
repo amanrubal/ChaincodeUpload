@@ -376,6 +376,7 @@ func (t *SimpleChaincode) authentication(stub shim.ChaincodeStubInterface, key s
 	for x := 0; x < len(msisdnList);x++ { 
 		if msisdn == msisdnList[x]{
 			rsDetailobj.Flag="Fraud"
+			break
 		}
 	}
     if rsDetailobj.Flag!="Fraud"{
@@ -383,7 +384,12 @@ func (t *SimpleChaincode) authentication(stub shim.ChaincodeStubInterface, key s
 	}
 
 	////// Add logic for authentication here
-	if rp == "XYZ" {
+	if rp == "" {
+		        rsDetailobj.Roaming = "False"
+			rsDetailobj.Action = "Authentication"
+			rsDetailobj.TransType = "Setup"
+			fmt.Println("Authentication Successfull")
+	} else if rp == "XYZ" {
 		if ho == "ABC" {
 			rsDetailobj.Roaming = "True"
 			rsDetailobj.Action = "Authentication"
@@ -437,7 +443,9 @@ func (t *SimpleChaincode) updateRates(stub shim.ChaincodeStubInterface, key stri
 	if rsDetailobj.Roaming == "True" {
 		sp = rsDetailobj.RP
 		if sp == "XYZ" {
-			rsDetailobj.RateType = "Roaming"
+			rsDetailobj.RateType = "RoamingXYZ"
+		}else if sp == "ABC" {
+			rsDetailobj.RateType = "RoamingABC"
 		}
 	}
 	currentDateStr := time.Now().Format(time.RFC822)
