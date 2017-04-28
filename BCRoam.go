@@ -98,11 +98,11 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 	currentDateStr := time.Now().Format(time.RFC822)
 	currtime, _ := time.Parse(time.RFC822, currentDateStr)
 	//Inventory hard coded here
-	rs1 := rsDetailBlock{"rs1", "14691234567", "A", "DALLAS", "ABC", "", "FALSE", "DALLAS","32.942746","-96.994838","", "", "", "", "", "", "", currtime}
+	rs1 := rsDetailBlock{"rs1", "14691234567", "A", "DC", "ABC", "", "FALSE", "DC","32.942746","38.91","-77.032", "", "", "", "", "", "", currtime}
 	rs2 := rsDetailBlock{"rs2", "14691234568", "B", "DALLAS", "ABC", "", "FALSE", "DALLAS","32.942746","-96.994838","", "", "", "", "", "", "", currtime}
-	rs3 := rsDetailBlock{"rs3", "14691234569", "C", "DALLAS", "ABC", "", "FALSE", "DALLAS","32.942746","-96.994838","", "", "", "", "", "", "", currtime}
-	rs4 := rsDetailBlock{"rs4", "14691234570", "D", "DALLAS", "ABC", "", "FALSE", "DALLAS","32.942746","-96.994838","", "", "", "", "", "", "", currtime}
-	rs5 := rsDetailBlock{"rs5", "349091234567", "E", "BARCELONA", "XYZ", "", "FALSE", "BARCELONA","41.385064","2.173403","", "", "", "", "", "", "", currtime}
+	rs3 := rsDetailBlock{"rs3", "14691234569", "C", "SF", "ABC", "", "FALSE", "SF","37.776","-122.414","", "", "", "", "", "", "", currtime}
+	rs4 := rsDetailBlock{"rs4", "14691234570", "D", "BERLIN", "XYZ", "", "FALSE", "BERLIN","52.5200","13.4050","", "", "", "", "", "", "", currtime}
+	rs5 := rsDetailBlock{"rs5", "349091234567", "E", "BARCELONA", "XYZ", "", "FALSE", "BARCELONA","41.3851","2.1734","", "", "", "", "", "", "", currtime}
 	rs6 := rsDetailBlock{"rs6", "349091234568", "F", "BARCELONA", "XYZ", "", "FALSE", "BARCELONA","41.385064","2.173403","", "", "", "", "", "", "", currtime}
 	rs7 := rsDetailBlock{"rs7", "349091234569", "G", "BARCELONA", "XYZ", "", "FALSE", "BARCELONA","41.385064","2.173403","", "", "", "", "", "", "", currtime}
 
