@@ -49,8 +49,8 @@ type rsDetailBlock struct {
 	Action      string    `json:"action"`
 	TransType   string    `json:"transtype"`
 	Destination string    `json:"destination"`
-	Duration    float32    `json:"duration"`
-	Charges     float32    `json:"charges"`
+	Duration    float64    `json:"duration"`
+	Charges     float64    `json:"charges"`
 	Flag        string    `json:"flag"`
 	Time        time.Time `json:"time"`
 }
