@@ -98,10 +98,10 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 	currentDateStr := time.Now().Format(time.RFC822)
 	currtime, _ := time.Parse(time.RFC822, currentDateStr)
 	//Inventory hard coded here
-	rs1 := rsDetailBlock{"rs1", "14691234567", "A", "DC", "ABC", "", "FALSE", "DC","32.942746","38.91","-77.032", "", "", "", "", "", "", currtime}
+	rs1 := rsDetailBlock{"rs1", "14691234567", "A", "DC", "ABC", "", "FALSE", "DC","32.942746","38.91","", "", "", "", "", "", "", currtime}
 	rs2 := rsDetailBlock{"rs2", "14691234568", "B", "DALLAS", "ABC", "", "FALSE", "DALLAS","32.942746","-96.994838","", "", "", "", "", "", "", currtime}
 	rs3 := rsDetailBlock{"rs3", "14691234569", "C", "SF", "ABC", "", "FALSE", "SF","37.776","-122.414","", "", "", "", "", "", "", currtime}
-	rs4 := rsDetailBlock{"rs4", "14691234570", "D", "BERLIN", "XYZ", "", "FALSE", "BERLIN","52.5200","13.4050","", "", "", "", "", "", "", currtime}
+	rs4 := rsDetailBlock{"rs4", "03097218855", "D", "BERLIN", "XYZ", "", "FALSE", "BERLIN","52.5200","13.4050","", "", "", "", "", "", "", currtime}
 	rs5 := rsDetailBlock{"rs5", "349091234567", "E", "BARCELONA", "XYZ", "", "FALSE", "BARCELONA","41.3851","2.1734","", "", "", "", "", "", "", currtime}
 	rs6 := rsDetailBlock{"rs6", "349091234568", "F", "BARCELONA", "XYZ", "", "FALSE", "BARCELONA","41.385064","2.173403","", "", "", "", "", "", "", currtime}
 	rs7 := rsDetailBlock{"rs7", "349091234569", "G", "BARCELONA", "XYZ", "", "FALSE", "BARCELONA","41.385064","2.173403","", "", "", "", "", "", "", currtime}
@@ -128,11 +128,11 @@ func (t *SimpleChaincode) resetInventory(stub shim.ChaincodeStubInterface) ([]by
 	currentDateStr := time.Now().Format(time.RFC822)
 	currtime, _ := time.Parse(time.RFC822, currentDateStr)
 	//Inventory hard coded here
-	rs1 := rsDetailBlock{"rs1", "14691234567", "A", "DALLAS", "ABC", "", "FALSE", "DALLAS","32.942746","-96.994838","", "", "", "", "", "", "", currtime}
+	rs1 := rsDetailBlock{"rs1", "14691234567", "A", "DC", "ABC", "", "FALSE", "DC","32.942746","38.91","", "", "", "", "", "", "", currtime}
 	rs2 := rsDetailBlock{"rs2", "14691234568", "B", "DALLAS", "ABC", "", "FALSE", "DALLAS","32.942746","-96.994838","", "", "", "", "", "", "", currtime}
-	rs3 := rsDetailBlock{"rs3", "14691234569", "C", "DALLAS", "ABC", "", "FALSE", "DALLAS","32.942746","-96.994838","", "", "", "", "", "", "", currtime}
-	rs4 := rsDetailBlock{"rs4", "14691234570", "D", "DALLAS", "ABC", "", "FALSE", "DALLAS","32.942746","-96.994838","", "", "", "", "", "", "", currtime}
-	rs5 := rsDetailBlock{"rs5", "349091234567", "E", "BARCELONA", "XYZ", "", "FALSE", "BARCELONA","41.385064","2.173403","", "", "", "", "", "", "", currtime}
+	rs3 := rsDetailBlock{"rs3", "14691234569", "C", "SF", "ABC", "", "FALSE", "SF","37.776","-122.414","", "", "", "", "", "", "", currtime}
+	rs4 := rsDetailBlock{"rs4", "03097218855 ", "D", "BERLIN", "XYZ", "", "FALSE", "BERLIN","52.5200","13.4050","", "", "", "", "", "", "", currtime}
+	rs5 := rsDetailBlock{"rs5", "349091234567", "E", "BARCELONA", "XYZ", "", "FALSE", "BARCELONA","41.3851","2.1734","", "", "", "", "", "", "", currtime}
 	rs6 := rsDetailBlock{"rs6", "349091234568", "F", "BARCELONA", "XYZ", "", "FALSE", "BARCELONA","41.385064","2.173403","", "", "", "", "", "", "", currtime}
 	rs7 := rsDetailBlock{"rs7", "349091234569", "G", "BARCELONA", "XYZ", "", "FALSE", "BARCELONA","41.385064","2.173403","", "", "", "", "", "", "", currtime}
 
@@ -243,25 +243,6 @@ func (t *SimpleChaincode) queryMSISDN(stub shim.ChaincodeStubInterface, args []s
 	bytes, _ := stub.GetState(key)
 	fmt.Println(string(bytes))
 	fmt.Printf("%x", bytes)
-	/*var rsDetailObj rsDetail
-	err := json.Unmarshal(bytes, &rsDetailobj)
-	if err != nil{
-		fmt.Printf("Error in Unmarshalling")
-	} else {
-		fmt.Printf("Name:%v",rsDetailObj.name)
-		fmt.Printf("Addr:%v",rsDetailObj.address)
-		fmt.Printf("HO:%v",rsDetailObj.ho)
-		fmt.Printf("RP:%v",rsDetailObj.rp)
-		fmt.Printf("Roaming:%v",rsDetailObj.roaming)
-		fmt.Printf("Location:%v",rsDetailObj.location)
-		fmt.Printf("Plan:%v",rsDetailObj.plan)
-		fmt.Printf("VoiceOutLocal:%v",rsDetailObj.voinceOutL)
-		fmt.Printf("VoiceInLocal:%v",rsDetailObj.voinceInL)
-		fmt.Printf("DataLocal:%v",rsDetailObj.dataL)
-		fmt.Printf("VoiceOutRoam:%v",rsDetailObj.voiceOutR)
-		fmt.Printf("VoiceInRoam:%v",rsDetailObj.voiceInR)
-		fmt.Printf("DataRoam:%v",rsDetailObj.dataR)
-	}*/
 	return bytes, nil
 }
 
@@ -570,9 +551,9 @@ func (t *SimpleChaincode) CallEnd(stub shim.ChaincodeStubInterface, key string) 
 	rsDetailobj.TransType = "Call Out"
 	currentDateStr := time.Now().Format(time.RFC822)
 	duration := time.Since(rsDetailobj.Time)
-	dur := strconv.FormatFloat(duration.Minutes(), 'E', -1, 64)
+	//dur := strconv.FormatFloat(duration.Minutes(), 'E', -1, 64)
 	rsDetailobj.Time, _ = time.Parse(time.RFC822, currentDateStr)
-	rsDetailobj.Duration = string(dur)
+	rsDetailobj.Duration = string(duration)
 	bytes2, _ := json.Marshal(rsDetailobj)
 	err2 := stub.PutState(rsDetailobj.PublicKey, bytes2)
 	if err2 != nil {
