@@ -552,7 +552,7 @@ func (t *SimpleChaincode) CallEnd(stub shim.ChaincodeStubInterface, key string) 
 	duration := time.Since(rsDetailobj.Time)
 	//dur := strconv.(duration.Minutes())
 	rsDetailobj.Time, _ = time.Parse(time.RFC822, currentDateStr)
-	rsDetailobj.Duration = duration(2)
+	rsDetailobj.Duration = duration.Seconds
 	bytes2, _ := json.Marshal(rsDetailobj)
 	err2 := stub.PutState(rsDetailobj.PublicKey, bytes2)
 	if err2 != nil {
