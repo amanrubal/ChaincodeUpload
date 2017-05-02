@@ -459,8 +459,8 @@ func (t *SimpleChaincode) CallOut(stub shim.ChaincodeStubInterface, key string, 
 	rsDetailobj.Destination = destmsisdn
 	rsDetailobj.Action = "Call Initialization"
 	rsDetailobj.TransType = "Call Out"
-	rsDetailobj.Duration = ""
-	rsDetailobj.Charges = ""
+	rsDetailobj.Duration = 0.0
+	rsDetailobj.Charges = 0.0
 	currentDateStr := time.Now().Format(time.RFC822)
 	rsDetailobj.Time, _ = time.Parse(time.RFC822, currentDateStr)
 	bytes2, _ := json.Marshal(rsDetailobj)
@@ -519,7 +519,7 @@ func (t *SimpleChaincode) CallIn(stub shim.ChaincodeStubInterface, key string, d
 	rsDetailobj.Destination = destmsisdn
 	rsDetailobj.Action = "Call Recieved"
 	rsDetailobj.TransType = "Call In"
-	rsDetailobj.Duration = ""
+	rsDetailobj.Duration = 0.0
 	currentDateStr := time.Now().Format(time.RFC822)
 	rsDetailobj.Time, _ = time.Parse(time.RFC822, currentDateStr)
 	bytes2, _ := json.Marshal(rsDetailobj)
@@ -552,7 +552,7 @@ func (t *SimpleChaincode) CallEnd(stub shim.ChaincodeStubInterface, key string) 
 	duration := time.Since(rsDetailobj.Time)
 	//dur := strconv.(duration.Minutes())
 	rsDetailobj.Time, _ = time.Parse(time.RFC822, currentDateStr)
-	rsDetailobj.Duration = duration
+	rsDetailobj.Duration = time.Duration(rand.Int31n(duration)) * time.Millisecond
 	bytes2, _ := json.Marshal(rsDetailobj)
 	err2 := stub.PutState(rsDetailobj.PublicKey, bytes2)
 	if err2 != nil {
