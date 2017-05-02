@@ -28,6 +28,9 @@ import (
 
 var msisdnList[] string
 var blankList[] string
+
+var rsmap map[string]string
+
 // SimpleChaincode example simple Chaincode implementation
 type SimpleChaincode struct {
 }
@@ -105,6 +108,15 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 	rs6 := rsDetailBlock{"rs6", "349091234568", "F", "BARCELONA", "XYZ", "", "FALSE", "BARCELONA","41.385064","2.173403","", "", "", "", 0.0, 0.0, "", currtime}
 	rs7 := rsDetailBlock{"rs7", "349091234569", "G", "BARCELONA", "XYZ", "", "FALSE", "BARCELONA","41.385064","2.173403","", "", "", "", 0.0, 0.0, "", currtime}
 
+	rsmap["rs1"] = "14691234567"
+	rsmap["rs2"] = "14691234568"
+	rsmap["rs3"] = "14691234569"
+	rsmap["rs4"] = "03097218855"
+	rsmap["rs5"] = "349091234567"
+	rsmap["rs6"] = "349091234568"
+	rsmap["rs7"] = "349091234569"
+
+
 	//Create array for all adspots in ledger
 	//var AllPeersArray AllPeers
 
@@ -136,6 +148,14 @@ func (t *SimpleChaincode) resetInventory(stub shim.ChaincodeStubInterface) ([]by
 	rs5 := rsDetailBlock{"rs5", "349091234567", "E", "BARCELONA", "XYZ", "", "FALSE", "BARCELONA","41.3851","2.1734","", "", "", "", 0.0, 0.0, "", currtime}
 	rs6 := rsDetailBlock{"rs6", "349091234568", "F", "BARCELONA", "XYZ", "", "FALSE", "BARCELONA","41.385064","2.173403","", "", "", "", 0.0, 0.0, "", currtime}
 	rs7 := rsDetailBlock{"rs7", "349091234569", "G", "BARCELONA", "XYZ", "", "FALSE", "BARCELONA","41.385064","2.173403","", "", "", "", 0.0, 0.0, "", currtime}
+
+	rsmap["rs1"] = "14691234567"
+	rsmap["rs2"] = "14691234568"
+	rsmap["rs3"] = "14691234569"
+	rsmap["rs4"] = "03097218855"
+	rsmap["rs5"] = "349091234567"
+	rsmap["rs6"] = "349091234568"
+	rsmap["rs7"] = "349091234569"
 
 	//Create array for all adspots in ledger
 	//var AllPeersArray AllPeers
@@ -283,6 +303,8 @@ func (t *SimpleChaincode) enterData(stub shim.ChaincodeStubInterface, key string
 		fmt.Println("Success -  works")
 	}
 
+	rsmap[rsDetailObj.PublicKey] = rsDetailObj.MSISDN
+
 	return nil, nil
 }
 
@@ -334,6 +356,8 @@ func (t *SimpleChaincode) discoverRP(stub shim.ChaincodeStubInterface, key strin
 		fmt.Println("Success, updated record")
 	}
 
+	delete(rsmap, key)
+
 	return nil, nil
 }
 
@@ -356,14 +380,22 @@ func (t *SimpleChaincode) authentication(stub shim.ChaincodeStubInterface, key s
 	rp = rsDetailobj.RP
 	msisdn = rsDetailobj.MSISDN
 	//ADDING LOGI FOR FRAUD:
-	for x := 0; x < len(msisdnList);x++ { 
+	for key, value := range rsmap {
+		if msisdn == value{
+			rsDetailobj.Flag="Fraud"
+			break
+		}
+        fmt.Println("Key:", key, "Value:", value)
+     }
+
+/*	for x := 0; x < len(msisdnList);x++ { 
 		if msisdn == msisdnList[x]{
 			rsDetailobj.Flag="Fraud"
 			break
 		}
-	}
+	}*/
     if rsDetailobj.Flag!="Fraud"{
-			msisdnList = append(msisdnList,rsDetailobj.MSISDN)
+			rsmap[rsDetailObj.PublicKey] = rsDetailObj.MSISDN
 	}
 
 	////// Add logic for authentication here
