@@ -395,11 +395,11 @@ func (t *SimpleChaincode) authentication(stub shim.ChaincodeStubInterface, key s
 		}
 	}*/
     if rsDetailobj.Flag!="Fraud"{
-			rsmap[rsDetailObj.PublicKey] = rsDetailObj.MSISDN
+			rsmap[rsDetailobj.PublicKey] = rsDetailobj.MSISDN
 	}
 
 	////// Add logic for authentication here
-	if rp == "" {å
+	if rp == "" {
 		        rsDetailobj.Roaming = "False"
 			rsDetailobj.Action = "Authentication"
 			rsDetailobj.TransType = "Setup"
