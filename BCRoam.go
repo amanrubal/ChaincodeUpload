@@ -116,6 +116,8 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 	t.putMSIDN(stub, rs6, rs6.PublicKey)
 	t.putMSIDN(stub, rs7, rs7.PublicKey)
 
+	msisdnList = append(msisdnList," ")
+
 	fmt.Println("Init Function Complete")
 	return nil, nil
 }
@@ -149,6 +151,7 @@ func (t *SimpleChaincode) resetInventory(stub shim.ChaincodeStubInterface) ([]by
 	fmt.Println("Reset Function Complete")
 	
 	msisdnList=blankList
+	msisdnList = append(msisdnList," ")
 	
 	return nil, nil
 
@@ -364,7 +367,7 @@ func (t *SimpleChaincode) authentication(stub shim.ChaincodeStubInterface, key s
 	}
 
 	////// Add logic for authentication here
-	if rp == "" {
+	if rp == "" {å
 		        rsDetailobj.Roaming = "False"
 			rsDetailobj.Action = "Authentication"
 			rsDetailobj.TransType = "Setup"
