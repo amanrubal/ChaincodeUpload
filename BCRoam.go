@@ -359,9 +359,9 @@ func (t *SimpleChaincode) discoverRP(stub shim.ChaincodeStubInterface, key strin
 		fmt.Println("Success, updated record")
 	}
 
-   if rsmap["rs1"]!=nil{
+	if len(rsmap) != 0{
 	 rsmap[key]=""
-   }
+         }
 
 	return nil, nil
 }
@@ -395,7 +395,7 @@ func (t *SimpleChaincode) authentication(stub shim.ChaincodeStubInterface, key s
 
 
     if rsDetailobj.Flag!="Fraud"{
-		    if rsmap[key]!=nil{
+	          if len(rsmap) != 0{
 			 rsmap[key] = msisdn
 			}
 	}
