@@ -150,7 +150,7 @@ func (t *SimpleChaincode) resetInventory(stub shim.ChaincodeStubInterface) ([]by
 	rs6 := rsDetailBlock{"rs6", "349091234568", "F", "BARCELONA", "XYZ", "", "FALSE", "BARCELONA","41.385064","2.173403","", "", "", "", 0.0, 0.0, "", currtime}
 	rs7 := rsDetailBlock{"rs7", "349091234569", "G", "BARCELONA", "XYZ", "", "FALSE", "BARCELONA","41.385064","2.173403","", "", "", "", 0.0, 0.0, "", currtime}
 
-    if len(rsmap)!= 0{
+    if len(rsmap) != 0{
 	rsmap["rs1"] = "14691234567"
 	rsmap["rs2"] = "14691234568"
 	rsmap["rs3"] = "14691234569"
@@ -359,7 +359,9 @@ func (t *SimpleChaincode) discoverRP(stub shim.ChaincodeStubInterface, key strin
 		fmt.Println("Success, updated record")
 	}
 
-	rsmap[key]=""
+   if rsmap["rs1"]!=nil{
+	 rsmap[key]=""
+   }
 
 	return nil, nil
 }
@@ -393,7 +395,9 @@ func (t *SimpleChaincode) authentication(stub shim.ChaincodeStubInterface, key s
 
 
     if rsDetailobj.Flag!="Fraud"{
-			rsmap[key] = msisdn
+		    if rsmap[key]!=nil{
+			 rsmap[key] = msisdn
+			}
 	}
 
 	////// Add logic for authentication here
