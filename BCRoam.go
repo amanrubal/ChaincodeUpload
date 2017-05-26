@@ -32,7 +32,7 @@ type SimpleChaincode struct {
 }
 
 
-var rsmap = []string
+var rsmap []string
 
 // This is our structure for the broadcaster creating bulk inventory
 
