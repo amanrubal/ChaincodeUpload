@@ -26,14 +26,13 @@ import (
 	"github.com/hyperledger/fabric/core/chaincode/shim"
 )
 
-var msisdnList[] string
-var blankList[] string
-
-var rsmap map[string]string
 
 // SimpleChaincode example simple Chaincode implementation
 type SimpleChaincode struct {
 }
+
+
+var rsmap = []string
 
 // This is our structure for the broadcaster creating bulk inventory
 
@@ -108,14 +107,15 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 	rs6 := rsDetailBlock{"rs6", "349091234568", "F", "BARCELONA", "XYZ", "", "FALSE", "BARCELONA","41.385064","2.173403","", "", "", "", 0.0, 0.0, "", currtime}
 	rs7 := rsDetailBlock{"rs7", "349091234569", "G", "BARCELONA", "XYZ", "", "FALSE", "BARCELONA","41.385064","2.173403","", "", "", "", 0.0, 0.0, "", currtime}
 
-	rsmap = make(map[string]string)
-	rsmap["rs1"] = "14691234567"
-	rsmap["rs2"] = "14691234568"
-	rsmap["rs3"] = "14691234569"
-	rsmap["rs4"] = "03097218855"
-	rsmap["rs5"] = "349091234567"
-	rsmap["rs6"] = "349091234568"
-	rsmap["rs7"] = "349091234569"
+
+	rsmap[0] = "14691234567"
+	rsmap[1] = "14691234568"
+	rsmap[2] = "14691234569"
+	rsmap[3] = "03097218855"
+	rsmap[4] = "349091234567"
+	rsmap[6] = "349091234568"
+	rsmap[7] = "349091234569"
+	rsmap[8] = ""
 
 
 	//Create array for all adspots in ledger
@@ -129,7 +129,6 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 	t.putMSIDN(stub, rs6, rs6.PublicKey)
 	t.putMSIDN(stub, rs7, rs7.PublicKey)
 
-	msisdnList = append(msisdnList," ")
 
 	fmt.Println("Init Function Complete")
 	return nil, nil
@@ -150,13 +149,14 @@ func (t *SimpleChaincode) resetInventory(stub shim.ChaincodeStubInterface) ([]by
 	rs6 := rsDetailBlock{"rs6", "349091234568", "F", "BARCELONA", "XYZ", "", "FALSE", "BARCELONA","41.385064","2.173403","", "", "", "", 0.0, 0.0, "", currtime}
 	rs7 := rsDetailBlock{"rs7", "349091234569", "G", "BARCELONA", "XYZ", "", "FALSE", "BARCELONA","41.385064","2.173403","", "", "", "", 0.0, 0.0, "", currtime}
 
-	rsmap["rs1"] = "14691234567"
-	rsmap["rs2"] = "14691234568"
-	rsmap["rs3"] = "14691234569"
-	rsmap["rs4"] = "03097218855"
-	rsmap["rs5"] = "349091234567"
-	rsmap["rs6"] = "349091234568"
-	rsmap["rs7"] = "349091234569"
+	rsmap[0] = "14691234567"
+	rsmap[1] = "14691234568"
+	rsmap[2] = "14691234569"
+	rsmap[3] = "03097218855"
+	rsmap[4] = "349091234567"
+	rsmap[6] = "349091234568"
+	rsmap[7] = "349091234569"
+	rsmap[8] = ""
 
 	//Create array for all adspots in ledger
 	//var AllPeersArray AllPeers
@@ -171,8 +171,7 @@ func (t *SimpleChaincode) resetInventory(stub shim.ChaincodeStubInterface) ([]by
 
 	fmt.Println("Reset Function Complete")
 	
-	msisdnList=blankList
-	msisdnList = append(msisdnList," ")
+
 	
 	return nil, nil
 
@@ -304,7 +303,7 @@ func (t *SimpleChaincode) enterData(stub shim.ChaincodeStubInterface, key string
 		fmt.Println("Success -  works")
 	}
 
-	rsmap[rsDetailObj.PublicKey] = rsDetailObj.MSISDN
+	//rsmap[key] = rsDetailObj.MSISDN
 
 	return nil, nil
 }
@@ -357,7 +356,7 @@ func (t *SimpleChaincode) discoverRP(stub shim.ChaincodeStubInterface, key strin
 		fmt.Println("Success, updated record")
 	}
 
-	delete(rsmap, key)
+	rsmap[key[2]]=""
 
 	return nil, nil
 }
@@ -380,23 +379,19 @@ func (t *SimpleChaincode) authentication(stub shim.ChaincodeStubInterface, key s
 	ho = rsDetailobj.HO
 	rp = rsDetailobj.RP
 	msisdn = rsDetailobj.MSISDN
-	//ADDING LOGI FOR FRAUD:
-	for key, value := range rsmap {
-		if msisdn == value{
+	//ADDING LOGIC FOR FRAUD:
+    for i := 0; i < len(rsmap); i += 1{
+        if msisdn == rsmap[i]{
 			rsDetailobj.Flag="Fraud"
 			break
 		}
         fmt.Println("Key:", key, "Value:", value)
      }
 
-/*	for x := 0; x < len(msisdnList);x++ { 
-		if msisdn == msisdnList[x]{
-			rsDetailobj.Flag="Fraud"
-			break
-		}
-	}*/
+
+
     if rsDetailobj.Flag!="Fraud"{
-			rsmap[rsDetailobj.PublicKey] = rsDetailobj.MSISDN
+			rsmap[rsDetailobj.PublicKey[2]] = rsDetailobj.MSISDN
 	}
 
 	////// Add logic for authentication here
