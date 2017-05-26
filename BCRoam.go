@@ -385,7 +385,7 @@ func (t *SimpleChaincode) authentication(stub shim.ChaincodeStubInterface, key s
 			rsDetailobj.Flag="Fraud"
 			break
 		}
-        fmt.Println("Key:", key, "Value:", value)
+        fmt.Println("Key:", i, "Value:", rsmap[i])
      }
 
 
