@@ -107,15 +107,7 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 	rs6 := rsDetailBlock{"rs6", "349091234568", "F", "BARCELONA", "XYZ", "", "FALSE", "BARCELONA","41.385064","2.173403","", "", "", "", 0.0, 0.0, "", currtime}
 	rs7 := rsDetailBlock{"rs7", "349091234569", "G", "BARCELONA", "XYZ", "", "FALSE", "BARCELONA","41.385064","2.173403","", "", "", "", 0.0, 0.0, "", currtime}
 
-
-	rsmap[0] = "14691234567"
-	rsmap[1] = "14691234568"
-	rsmap[2] = "14691234569"
-	rsmap[3] = "03097218855"
-	rsmap[4] = "349091234567"
-	rsmap[6] = "349091234568"
-	rsmap[7] = "349091234569"
-	rsmap[8] = ""
+        rsmap = []string{"14691234567", "14691234568", "14691234569", "03097218855","349091234567","349091234568","349091234569",""}
 
 
 	//Create array for all adspots in ledger
@@ -149,14 +141,8 @@ func (t *SimpleChaincode) resetInventory(stub shim.ChaincodeStubInterface) ([]by
 	rs6 := rsDetailBlock{"rs6", "349091234568", "F", "BARCELONA", "XYZ", "", "FALSE", "BARCELONA","41.385064","2.173403","", "", "", "", 0.0, 0.0, "", currtime}
 	rs7 := rsDetailBlock{"rs7", "349091234569", "G", "BARCELONA", "XYZ", "", "FALSE", "BARCELONA","41.385064","2.173403","", "", "", "", 0.0, 0.0, "", currtime}
 
-	rsmap[0] = "14691234567"
-	rsmap[1] = "14691234568"
-	rsmap[2] = "14691234569"
-	rsmap[3] = "03097218855"
-	rsmap[4] = "349091234567"
-	rsmap[6] = "349091234568"
-	rsmap[7] = "349091234569"
-	rsmap[8] = ""
+	
+        rsmap = []string{"14691234567", "14691234568", "14691234569", "03097218855","349091234567","349091234568","349091234569",""}
 
 	//Create array for all adspots in ledger
 	//var AllPeersArray AllPeers
