@@ -159,8 +159,7 @@ func (t *SimpleChaincode) resetInventory(stub shim.ChaincodeStubInterface) ([]by
 	rsmap["rs6"] = "349091234568"
 	rsmap["rs7"] = "349091234569"
 	rsmap["rs8"] = ""
-   }
-   else{
+   }else{
 		fmt.Println("Map is empty: ",len(rsmap))
 	}
 
@@ -362,8 +361,7 @@ func (t *SimpleChaincode) discoverRP(stub shim.ChaincodeStubInterface, key strin
 
 	if len(rsmap) != 0{
 	 rsmap[key]=""
-         }
-	else{
+         }else{
 		fmt.Println("Map is empty: ",len(rsmap))
 		}
 
@@ -405,8 +403,7 @@ func (t *SimpleChaincode) authentication(stub shim.ChaincodeStubInterface, keyy 
     if rsDetailobj.Flag!="Fraud"{
 	          if len(rsmap) != 0{
 			 rsmap[keyy] = msisdn
-			}
-			else{
+			}else{
 				fmt.Println("Map is empty: ",len(rsmap))
 			}
 	}
