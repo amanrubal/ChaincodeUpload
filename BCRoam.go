@@ -159,6 +159,9 @@ func (t *SimpleChaincode) resetInventory(stub shim.ChaincodeStubInterface) ([]by
 	rsmap["rs6"] = "349091234568"
 	rsmap["rs7"] = "349091234569"
 	rsmap["rs8"] = ""
+   }
+   else{
+		fmt.Println("Map is empty: ",len(rsmap))
 	}
 
 	//Create array for all adspots in ledger
@@ -226,7 +229,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 		fmt.Printf("Function is resetInventory")
 		return t.resetInventory(stub)
 	}else if function == "enterData" {
-		fmt.Printf("Function is resetInventory")
+		fmt.Printf("Function is enterData")
 		key =args[0]
 		msisdn =args[1]
 		name =args[2]
@@ -306,8 +309,6 @@ func (t *SimpleChaincode) enterData(stub shim.ChaincodeStubInterface, key string
 		fmt.Println("Success -  works")
 	}
 
-	//rsmap[key] = rsDetailObj.MSISDN
-
 	return nil, nil
 }
 
@@ -362,19 +363,22 @@ func (t *SimpleChaincode) discoverRP(stub shim.ChaincodeStubInterface, key strin
 	if len(rsmap) != 0{
 	 rsmap[key]=""
          }
+	else{
+		fmt.Println("Map is empty: ",len(rsmap))
+		}
 
 	return nil, nil
 }
 
 //Authentication
-func (t *SimpleChaincode) authentication(stub shim.ChaincodeStubInterface, key string) ([]byte, error) {
+func (t *SimpleChaincode) authentication(stub shim.ChaincodeStubInterface, keyy string) ([]byte, error) {
 
-	bytes, err := stub.GetState(key)
+	bytes, err := stub.GetState(keyy)
 	if err != nil {
-		fmt.Println("Error - Could not get User details : %s", key)
+		fmt.Println("Error - Could not get User details : %s", keyy)
 		//return nil, err
 	} else {
-		fmt.Println("Success - User details found %s", key)
+		fmt.Println("Success - User details found %s", keyy)
 	}
 
 	var ho, rp, msisdn string
@@ -393,10 +397,17 @@ func (t *SimpleChaincode) authentication(stub shim.ChaincodeStubInterface, key s
         fmt.Println("Key:", key, "Value:", value)
      }
 
+	 if keyy=="rs8"{
+		rsDetailobj.Flag="Fraud" 
+	 }
+
 
     if rsDetailobj.Flag!="Fraud"{
 	          if len(rsmap) != 0{
-			 rsmap[key] = msisdn
+			 rsmap[keyy] = msisdn
+			}
+			else{
+				fmt.Println("Map is empty: ",len(rsmap))
 			}
 	}
 
